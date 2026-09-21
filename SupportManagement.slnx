@@ -4,10 +4,13 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="SupportManagement/SupportManagement.csproj">
+  <Project Path="SupportManagement.App/SupportManagement.App.csproj" Id="2ef65650-a9b8-4ee5-9640-91dd9d779e44">
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />
     <Platform Solution="*|x86" Project="x86" />
     <Deploy />
   </Project>
+  <Project Path="SupportManagement.Application/SupportManagement.Application.csproj" Id="09221cff-4490-4d0a-acd3-847547eaf3f9" />
+  <Project Path="SupportManagement.Domain/SupportManagement.Domain.csproj" Id="09e12912-7bf5-4ef3-a339-c3fbb0a9c2f3" />
+  <Project Path="SupportManagement.Infrastructure/SupportManagement.Infrastructure.csproj" Id="5d32ead8-826c-4918-b144-b78a67825f4f" />
 </Solution>

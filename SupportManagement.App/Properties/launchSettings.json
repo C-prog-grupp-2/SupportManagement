@@ -1,9 +1,9 @@
 {
   "profiles": {
-    "SupportManagement (Package)": {
+    "SupportManagement.App (Package)": {
       "commandName": "MsixPackage"
     },
-    "SupportManagement (Unpackaged)": {
+    "SupportManagement.App (Unpackaged)": {
       "commandName": "Project"
     }
   }
