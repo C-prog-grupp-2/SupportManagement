@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SupportManagement (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "SupportManagement (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
