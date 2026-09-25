@@ -45,6 +45,12 @@
     <ProjectReference Include="..\SupportManagement.Application\SupportManagement.Application.csproj" />
     <ProjectReference Include="..\SupportManagement.Infrastructure\SupportManagement.Infrastructure.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Navigation\" />
+    <Folder Include="Views\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Styles\" />
+  </ItemGroup>
 
   <!--
     Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution
