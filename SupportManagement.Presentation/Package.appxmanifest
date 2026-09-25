@@ -9,14 +9,14 @@
   IgnorableNamespaces="uap rescap systemai">
 
   <Identity
-    Name="019a20ae-4a92-415e-b282-f97af4b9de1a"
+    Name="904cf936-1756-4f63-875f-c19cceef2ef9"
     Publisher="CN=Alexander"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="019a20ae-4a92-415e-b282-f97af4b9de1a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="904cf936-1756-4f63-875f-c19cceef2ef9" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>SupportManagement.App</DisplayName>
+    <DisplayName>SupportManagement.Presentation</DisplayName>
     <PublisherDisplayName>Alexander</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -35,8 +35,8 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="SupportManagement.App"
-        Description="SupportManagement.App"
+        DisplayName="SupportManagement.Presentation"
+        Description="SupportManagement.Presentation"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">
