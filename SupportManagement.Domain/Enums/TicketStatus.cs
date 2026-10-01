@@ -4,6 +4,6 @@
     {
         New,
         InProgress,
-        Closed
+        Resolved
     }
 }
