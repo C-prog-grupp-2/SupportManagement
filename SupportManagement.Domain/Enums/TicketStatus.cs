@@ -8,6 +8,6 @@ namespace SupportManagement.Domain.Enums
     {
         New,
         InProgress,
-        Closed
+        Resolved
     }
 }
