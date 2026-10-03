@@ -49,8 +49,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Navigation\" />
-    <Folder Include="Views\" />
     <Folder Include="Styles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\TicketDetailView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!--
