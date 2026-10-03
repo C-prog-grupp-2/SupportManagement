@@ -49,4 +49,22 @@ public async Task ChangePriorityAsync(
         // Sparar det uppdaterade ärendet.
         await repository.SaveAsync(ticket);
     }
+    // Ändrar statusen på ett ärende.
+    public async Task ChangeStatusAsync(
+        Guid ticketId,
+        TicketStatus status)
+    {
+        // Hämtar ärendet med hjälp av dess ID.
+        var ticket = await repository.GetByIdAsync(ticketId);
+
+        // Om ärendet inte hittas kastas ett fel.
+        if (ticket is null)
+            throw new InvalidOperationException("Ärendet hittades inte.");
+
+        // Ändrar ärendets status.
+        ticket.ChangeStatus(status);
+
+        // Sparar det uppdaterade ärendet.
+        await repository.SaveAsync(ticket);
+    }
 }
