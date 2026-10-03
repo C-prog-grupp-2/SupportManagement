@@ -30,4 +30,23 @@ public class TicketService(ITicketRepository repository)
         // Sparar det uppdaterade ärendet.
         await repository.SaveAsync(ticket);
     }
+
+// Ändrar prioriteten på ett ärende.
+public async Task ChangePriorityAsync(
+    Guid ticketId,
+    TicketPriority priority)
+    {
+        // Hämtar ärendet med hjälp av dess ID.
+        var ticket = await repository.GetByIdAsync(ticketId);
+
+        // Om ärendet inte hittas kastas ett fel.
+        if (ticket is null)
+            throw new InvalidOperationException("Ärendet hittades inte.");
+
+        // Ändrar ärendets prioritet.
+        ticket.ChangePriority(priority);
+
+        // Sparar det uppdaterade ärendet.
+        await repository.SaveAsync(ticket);
+    }
 }
