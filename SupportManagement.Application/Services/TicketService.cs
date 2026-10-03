@@ -67,4 +67,22 @@ public async Task ChangePriorityAsync(
         // Sparar det uppdaterade ärendet.
         await repository.SaveAsync(ticket);
     }
+    // Lägger till en kommentar på ett ärende.
+    public async Task AddCommentAsync(
+        Guid ticketId,
+        string commentText)
+    {
+        // Hämtar ärendet med hjälp av dess ID.
+        var ticket = await repository.GetByIdAsync(ticketId);
+
+        // Om ärendet inte hittas kastas ett fel.
+        if (ticket is null)
+            throw new InvalidOperationException("Ärendet hittades inte.");
+
+        // Lägger till kommentaren på ärendet.
+        ticket.AddComment(commentText);
+
+        // Sparar ärendet med den nya kommentaren.
+        await repository.SaveAsync(ticket);
+    }
 }
