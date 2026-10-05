@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SupportManagement.Domain.Enums
+﻿namespace SupportManagement.Domain.Enums
 {
     public enum TicketPriority
     {
