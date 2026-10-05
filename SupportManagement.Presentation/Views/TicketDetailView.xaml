@@ -9,16 +9,13 @@
     <Grid Margin="30">
 
         <Grid.RowDefinitions>
-            <!-- Rubrik -->
+            
             <RowDefinition Height="Auto"/>
 
-            <!-- Information om ticket -->
             <RowDefinition Height="Auto"/>
 
-            <!-- Kommentarer tar resten av utrymmet -->
             <RowDefinition Height="*"/>
 
-            <!-- Knappar -->
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 

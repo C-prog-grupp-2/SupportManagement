@@ -1,6 +1,6 @@
 namespace SupportManagement.Presentation.Views;
 
-// Visar sidan för ticketdetaljer.
+// Visar sidan för ticketdetails.
 public sealed partial class TicketDetailView
 {
     public TicketDetailView()

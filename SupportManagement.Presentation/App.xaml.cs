@@ -17,12 +17,10 @@ public partial class App : Microsoft.UI.Xaml.Application
         // Kopplar App.xaml till den här C#-klassen.
         InitializeComponent();
 
-        // Skapar en lista där vi registrerar de klasser
-        // som ska hanteras av Dependency Injection.
+        // Skapar en lista där vi registrerar de klasser som ska hanteras av Dependency Injection.
         var services = new ServiceCollection();
 
-        // Registrerar MainWindow i Dependency Injection.
-        // Transient betyder att en ny instans skapas när den hämtas.
+        // Registrerar MainWindow i Dependency Injection
         services.AddTransient<MainWindow>();
 
         // Bygger en ServiceProvider från våra registrerade services.

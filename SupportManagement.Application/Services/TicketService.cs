@@ -1,10 +1,5 @@
-﻿// Gör det möjligt att använda ITicketRepository.
-using SupportManagement.Application.Interfaces;
-
-// Gör det möjligt att använda TicketPriority och TicketStatus.
+﻿using SupportManagement.Application.Interfaces;
 using SupportManagement.Domain.Enums;
-
-// Gör det möjligt att använda Ticket.
 using SupportManagement.Domain.Models;
 
 namespace SupportManagement.Application.Services;
