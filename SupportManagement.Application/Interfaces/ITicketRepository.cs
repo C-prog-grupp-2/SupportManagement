@@ -4,5 +4,6 @@ namespace SupportManagement.Application.Interfaces;
 
 public interface ITicketRepository
 {
-    Task SaveAsync(Ticket ticket);
+    Task<List<Ticket>> GetAllAsync();
+    Task SaveAllAsync(IEnumerable<Ticket> tickets);
 }
