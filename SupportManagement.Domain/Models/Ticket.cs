@@ -72,4 +72,16 @@ public class Ticket
             CommentContent = commentText.Trim()
         });
     }
+    // Uppdaterar rubrik och beskrivning på ett ärende.
+    public void UpdateDetails(string title, string description)
+    {
+        if (string.IsNullOrWhiteSpace(title))
+            throw new ArgumentException("Ange en rubrik.", nameof(title));
+
+        if (string.IsNullOrWhiteSpace(description))
+            throw new ArgumentException("Ange en beskrivning.", nameof(description));
+
+        Title = title.Trim();
+        Description = description.Trim();
+    }
 }
