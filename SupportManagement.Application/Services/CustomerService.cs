@@ -54,6 +54,13 @@ public class CustomerService (ICustomerRepository customerRepository) : ICustome
         if (string.IsNullOrWhiteSpace(email))
             throw new ArgumentException("Ange en e-postadress");
 
+        name = name.Trim();
+        email = email.Trim();
+
+        //Kontrollera att e-postadressen har ett giltigt format.
+        if (!MailAddress.TryCreate(email, out var address) || address.Address != email)
+                throw new ArgumentException("Ange en giltig e-postadress.");
+
         var customers = await customerRepository.GetAllAsync();
 
         var customer = customers.FirstOrDefault(customer =>customer.Id == customerId);//Hitta rätt kund via Id
@@ -61,7 +68,7 @@ public class CustomerService (ICustomerRepository customerRepository) : ICustome
         if (customer == null) // Om ingen kund med detta Id hittades, avbryt.
             return;
 
-        customer.Name = name; //ge den nytt namn & nedan email.
+        customer.Name = name; // Uppdaterar kundens namn och e-postadress.
         customer.Email = email;
 
         await customerRepository.SaveAllAsync(customers);
