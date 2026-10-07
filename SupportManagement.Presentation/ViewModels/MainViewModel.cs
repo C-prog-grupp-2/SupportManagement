@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using SupportManagement.Presentation.Navigation;
 
 namespace SupportManagement.Presentation.ViewModels;
 
-internal class MainViewModel
+public partial class MainViewModel(INavigationService navigationService) : ObservableObject
 {
+    public INavigationService Navigation { get; } = navigationService;
 }
