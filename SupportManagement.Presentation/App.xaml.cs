@@ -33,23 +33,23 @@ public partial class App : Microsoft.UI.Xaml.Application
         services.AddSingleton<ITicketService, TicketService>();
         services.AddSingleton<ICustomerService, CustomerService>();
 
-        services.AddTransient<CustomersViewModel>();
-        services.AddTransient<CustomersPage>();
+        //services.AddTransient<CustomersViewModel>();
+        //services.AddTransient<CustomersPage>();
 
-        services.AddTransient<CreateCustomerViewModel>();
-        services.AddTransient<CreateCustomerPage>();
+        //services.AddTransient<CreateCustomerViewModel>();
+        //services.AddTransient<CreateCustomerPage>();
 
-        services.AddTransient<EditCustomerViewModel>();
-        services.AddTransient<EditCustomerPage>();
+        //services.AddTransient<EditCustomerViewModel>();
+        //services.AddTransient<EditCustomerPage>();
 
-        services.AddTransient<TicketOverviewViewModel>();
-        services.AddTransient<TicketOverviewPage>();
+        //services.AddTransient<TicketOverviewViewModel>();
+        //services.AddTransient<TicketOverviewPage>();
 
-        services.AddTransient<CreateTicketViewModel>();
-        services.AddTransient<CreateTicketPage>();
+        //services.AddTransient<CreateTicketViewModel>();
+        //services.AddTransient<CreateTicketPage>();
 
-        services.AddTransient<ManageTicketViewModel>();
-        services.AddTransient<ManageTicketPage>();
+        //services.AddTransient<ManageTicketViewModel>();
+        //services.AddTransient<ManageTicketPage>();
 
         _serviceProvider = services.BuildServiceProvider();
     }
