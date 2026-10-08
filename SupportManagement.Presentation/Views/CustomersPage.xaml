@@ -13,7 +13,7 @@
     
     <Grid Padding="24">
                     
-        <StackPanel Spacing="20">
+        <StackPanel Spacing="32">
             
             
           <!--SIDRUBRIK OCH LÄGG TILL NY KYND-->
@@ -22,6 +22,8 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
+                
+                
                 
               <!--Rubrik och beskrivning-->
                 <StackPanel Grid.Column="0" Spacing="6">
@@ -34,6 +36,7 @@
 
                 </StackPanel>
                 
+                
                 <!--Ny kund-knapp-->
                 <Button Grid.Column="1"
                         Content="+ Ny kund"
@@ -41,44 +44,60 @@
                         Width="110"
                         VerticalAlignment="Center"
                         Command="{x:Bind ViewModel.GoToCreateCustomerCommand}"/>
-                
             </Grid>
             
                         
             <!--KUNDLISTA-->
 
-            <TextBlock Text="Registerade kunder"
+            <TextBlock Text="Registerade kunder:"
                       Style="{StaticResource SectionTitleStyle}" />
-             
-            
-            <Grid ColumnSpacing="16">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="3*"/>
-                </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0"
-                           Text="=Namn/ Företag"
-                           FontWeight="SemiBold"/>
+            <StackPanel Spacing="8">
+                <Grid ColumnSpacing="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="1"
+                    <TextBlock Grid.Column="0"
+                           Text="Namn/ Företag"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           Foreground="#A9B6B7"/>
+
+                    <TextBlock Grid.Column="1"
                            Text="E-postadress"
-                           FontWeight="SemiBold"/>
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           Foreground="#A9B6B7"/>
 
-            </Grid>
+                </Grid>
+            
 
 
-                <!--LISTA MED KUNDER-->
+            <!--LISTA MED KUNDER-->
             <ListView ItemsSource="{x:Bind ViewModel.Customers, Mode=OneWay}"
                       SelectedItem="{x:Bind ViewModel.SelectedCustomer, Mode=TwoWay}">
+                
+                <!--Markera kunden-->
+                <ListView.Resources>
+                    <SolidColorBrush x:Key="ListViewItemBackgroundSelected"
+                     Color="#315B73"/>
 
+                    <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver"
+                     Color="#3A6882"/>
+
+                    <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPressed"
+                     Color="#315B73"/>
+                </ListView.Resources>
+                                
 
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:Customer">
                         <Grid ColumnSpacing="16">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="2*"/>
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Grid.Column="0"
@@ -91,8 +110,8 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-           
-            
+            </StackPanel>
+
             <!--KNAPPAR FÖR VALD KUND-->
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right"
@@ -103,7 +122,7 @@
 
                 <Button Content="Ta bort"
                         Style="{StaticResource SecondaryButtonStyle}"
-                        Click="DeleteCustomer_Click"/>
+                        Command="{x:Bind ViewModel.DeleteCustomerCommand}"/>
 
 
             </StackPanel>

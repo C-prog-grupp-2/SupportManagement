@@ -27,29 +27,4 @@ public sealed partial class CustomersPage : Page
         await ViewModel.LoadCustomersAsync();
     }
 
-
-    private async void DeleteCustomer_Click(object sender, RoutedEventArgs e)
-    {
-        if (ViewModel.SelectedCustomer == null)
-            return;
-
-        var dialog = new ContentDialog
-        {
-            Title = "Ta bort kund?",
-            Content = "Är du säker på att du vill ta bort kunden?",
-            PrimaryButtonText = "Ta bort",
-            CloseButtonText = "Avbryt",
-            DefaultButton = ContentDialogButton.Close,
-            XamlRoot = this.XamlRoot
-        };
-
-        var result = await dialog.ShowAsync();
-
-        if(result== ContentDialogResult.Primary)
-        {
-            await ViewModel.DeleteCustomerAsync();
-
-        }
-
-    }
 }

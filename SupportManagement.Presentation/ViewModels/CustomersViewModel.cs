@@ -60,10 +60,9 @@ public partial class CustomersViewModel(ICustomerService customerService, INavig
         {
 
             await customerService.DeleteAsync(SelectedCustomer.Id); //Ta den markerade kunden, be service radera den, ladda om listan.
-
             await LoadCustomersAsync();
         }
-        catch
+        catch (Exception)
         {
             StatusMessage = "Kunden kunde inte tas bort. Försök igen.";
         }
