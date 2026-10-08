@@ -245,8 +245,8 @@
             <Button
                 Content="Spara"
                 Style="{StaticResource PrimaryButtonStyle}"
-                Margin="0,0,10,0"/>
-
+                Margin="0,0,10,0"
+                Click="SaveButton_Click"/>  
             <Button
                 Content="Tillbaka"
                 Style="{StaticResource SecondaryButtonStyle}"/>

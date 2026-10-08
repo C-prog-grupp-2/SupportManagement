@@ -1,3 +1,4 @@
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using SupportManagement.Presentation.ViewModels;
 using System;
@@ -21,5 +22,12 @@ public sealed partial class ManageTicketPage : Page
     public async Task LoadTicketAsync(Guid ticketId)
     {
         await _viewModel.LoadTicketAsync(ticketId);
+    }
+
+    private async void SaveButton_Click(
+      object sender,
+      RoutedEventArgs e)
+    {
+        await _viewModel.SaveAsync();
     }
 }
