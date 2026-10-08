@@ -22,12 +22,12 @@
 
             <NavigationView.MenuItems>
                 <NavigationViewItem
-            Content="Customers"
+            Content="Kunder"
             Icon="People"
             Tag="Customers" />
 
                 <NavigationViewItem
-            Content="Tickets"
+            Content="Ärenden"
             Icon="Document"
             Tag="TicketOverview" />
             </NavigationView.MenuItems>
