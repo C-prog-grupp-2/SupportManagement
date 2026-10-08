@@ -20,7 +20,7 @@ public partial class NavigationService(IServiceProvider services) : ObservableOb
             //AppPage.EditCustomer => services.GetRequiredService<EditCustomerPage>(),
             //AppPage.TicketOverview => services.GetRequiredService<TicketOverviewPage>(),
             //AppPage.CreateTicket => services.GetRequiredService<CreateTicketPage>(),
-            //AppPage.ManageTicket => services.GetRequiredService<ManageTicketPage>(),
+            AppPage.ManageTicket => services.GetRequiredService<ManageTicketPage>(),
             _ => throw new ArgumentOutOfRangeException(nameof(page))
         };
     }
