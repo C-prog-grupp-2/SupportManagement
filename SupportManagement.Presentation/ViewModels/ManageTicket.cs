@@ -28,6 +28,9 @@ public partial class ManageTicket : ObservableObject
     [ObservableProperty]
     private string? selectedTechnician;
 
+    [ObservableProperty]
+    private string commentText = string.Empty;
+
     public TicketPriority[] TicketPriorities { get; } =
         Enum.GetValues<TicketPriority>();
 
@@ -90,6 +93,23 @@ public partial class ManageTicket : ObservableObject
         await _ticketService.ChangeStatusAsync(
             Ticket.Id,
             SelectedStatus);
+
+        await LoadTicketAsync(Ticket.Id);
+    }
+
+    public async Task AddCommentAsync()
+    {
+        if (Ticket is null)
+            return;
+
+        if (string.IsNullOrWhiteSpace(CommentText))
+            return;
+
+        await _ticketService.AddCommentAsync(
+            Ticket.Id,
+            CommentText);
+
+        CommentText = string.Empty;
 
         await LoadTicketAsync(Ticket.Id);
     }
