@@ -65,4 +65,32 @@ public partial class ManageTicket : ObservableObject
         Customer = customers.FirstOrDefault(
             customer => customer.Id == Ticket.CustomerId);
     }
+
+    public async Task SaveAsync()
+    {
+        if (Ticket is null)
+            return;
+
+        await _ticketService.UpdateDetailsAsync(
+            Ticket.Id,
+            Ticket.Title,
+            Ticket.Description);
+
+        await _ticketService.ChangePriorityAsync(
+            Ticket.Id,
+            SelectedPriority);
+
+        if (!string.IsNullOrWhiteSpace(SelectedTechnician))
+        {
+            await _ticketService.AssignTechnicianAsync(
+                Ticket.Id,
+                SelectedTechnician);
+        }
+
+        await _ticketService.ChangeStatusAsync(
+            Ticket.Id,
+            SelectedStatus);
+
+        await LoadTicketAsync(Ticket.Id);
+    }
 }
