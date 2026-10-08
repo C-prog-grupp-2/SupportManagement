@@ -17,6 +17,10 @@
   <ItemGroup>
     <None Remove="Views\ManageTicketPage.xaml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Styles\Buttons.xaml" />
+    <None Remove="Styles\Typography.xaml" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -53,6 +57,17 @@
   <ItemGroup>
     <Folder Include="Navigation\" />
     <Folder Include="Styles\" />
+    <Folder Include="Views\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Styles\Typography.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Styles\Buttons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\ManageTicketPage.xaml">
