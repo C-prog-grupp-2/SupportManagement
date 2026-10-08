@@ -34,7 +34,9 @@ public class TicketService(ITicketRepository ticketRepository, ICustomerReposito
             Priority = priority
         };
 
-        await ticketRepository.SaveAsync(ticket);
+        var tickets = await ticketRepository.GetAllAsync();
+        tickets.Add(ticket);
+        await ticketRepository.SaveAllAsync(tickets);
 
         return ticket;
     }
