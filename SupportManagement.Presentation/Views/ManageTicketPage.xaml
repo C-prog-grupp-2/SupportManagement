@@ -224,9 +224,10 @@
                     <TextBox
                         Grid.Column="0"
                         Height="60"
+                        Text="{Binding CommentText, Mode=TwoWay}"
                         TextWrapping="Wrap"
                         AcceptsReturn="True"
-                        ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"/>       
 
                     <Button
                         Content="Lägg till kommentar"
