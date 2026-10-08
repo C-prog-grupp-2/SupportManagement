@@ -15,8 +15,8 @@
                     
         <StackPanel Spacing="20">
             
+            
           <!--SIDRUBRIK OCH LÄGG TILL NY KYND-->
-
             <Grid ColumnSpacing="16">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -26,35 +26,92 @@
               <!--Rubrik och beskrivning-->
                 <StackPanel Grid.Column="0" Spacing="6">
                     <TextBlock Text="Kundregister"
-                               FontSize="28"
-                               FontWeight="Bold"/>
+                               Style="{StaticResource PageTitleStyle}"/>
 
                     <TextBlock Text="Hantera registrerade kunder och kontaktuppgifter"
-                               FontSize="14"
+                               Style="{StaticResource BodyTextStyle}"
                                TextWrapping="WrapWholeWords"/>
 
                 </StackPanel>
                 
                 <!--Ny kund-knapp-->
-
                 <Button Grid.Column="1"
                         Content="+ Ny kund"
+                        Style="{StaticResource PrimaryButtonStyle}"
                         Width="110"
-                        Height="40"
                         VerticalAlignment="Center"/>
             </Grid>
             
-            
-            
+                        
             <!--KUNDLISTA-->
 
             <TextBlock Text="Registerade kunder"
-                       FontSize="18"
-                       FontWeight="SemiBold"/>
-
+                      Style="{StaticResource SectionTitleStyle}" />
+             
             
-            <!--Kolumnrubriker-->
+            <Grid ColumnSpacing="16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="=Namn/ Företag"
+                           FontWeight="SemiBold"/>
+
+                <TextBlock Grid.Column="1"
+                           Text="E-postadress"
+                           FontWeight="SemiBold"/>
+
+            </Grid>
+
+
+                <!--LISTA MED KUNDER-->
+            <ListView ItemsSource="{x:Bind ViewModel.Customers, Mode=OneWay}"
+                      SelectedItem="{x:Bind ViewModel.SelectedCustomer, Mode=TwoWay}">
+
+
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Customer">
+                        <Grid ColumnSpacing="16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="3*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0"
+                                       Text="{x:Bind Name}" />
+
+                            <TextBlock Grid.Column="1"
+                                       Text="{x:Bind Email}" />
+                            
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
            
+            
+            <!--KNAPPAR FÖR VALD KUND-->
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Spacing="12">
+
+                <Button Content="Redigera"
+                        Style="{StaticResource SecondaryButtonStyle}"/>
+
+                <Button Content="Ta bort"
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        Click="DeleteCustomer_Click"/>
+
+
+            </StackPanel>
+
+
+            <!--FELMEDDELANDEN-->
+            <TextBlock Text="{x:Bind ViewModel.StatusMessage,Mode=OneWay}"
+                       Foreground="IndianRed"
+                       TextWrapping="WrapWholeWords" />
+
         </StackPanel>
     </Grid>
 </Page>

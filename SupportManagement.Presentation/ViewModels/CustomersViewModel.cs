@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using SupportManagement.Application.Interfaces;
 using SupportManagement.Domain.Models;
 using SupportManagement.Presentation.Navigation;
@@ -39,7 +40,6 @@ public partial class CustomersViewModel(ICustomerService customerService, INavig
                 Customers.Add(customer);
 
             }
-
         }
 
         catch (Exception)
@@ -48,7 +48,7 @@ public partial class CustomersViewModel(ICustomerService customerService, INavig
         }
     }
 
-
+    [RelayCommand]
     public async Task DeleteCustomerAsync()
     {
         if (SelectedCustomer == null)
