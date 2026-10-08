@@ -39,7 +39,9 @@
                         Content="+ Ny kund"
                         Style="{StaticResource PrimaryButtonStyle}"
                         Width="110"
-                        VerticalAlignment="Center"/>
+                        VerticalAlignment="Center"
+                        Command="{x:Bind ViewModel.GoToCreateCustomerCommand}"/>
+                
             </Grid>
             
                         

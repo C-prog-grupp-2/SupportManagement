@@ -70,4 +70,9 @@ public partial class CustomersViewModel(ICustomerService customerService, INavig
 
     }
 
+    [RelayCommand]
+    private void GoToCreateCustomer()
+    {
+        navigationService.Navigate(AppPage.CreateCustomers);
+    }
 }
