@@ -52,6 +52,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
 
@@ -103,69 +104,72 @@
                 Margin="0,0,0,10"/>
 
 
-            <!-- Prioritet -->
+            <!-- E-post -->
             <TextBlock
                 Grid.Row="3"
+                Grid.Column="0"
+                Text="E-post:"
+                FontWeight="Bold"
+                Margin="0,0,15,10"/>
+
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="1"
+                Text="{Binding Customer.Email}"
+                Margin="0,0,0,10"/>
+
+
+            <!-- Prioritet -->
+            <TextBlock
+                Grid.Row="4"
                 Grid.Column="0"
                 Text="Prioritet:"
                 FontWeight="Bold"
                 Margin="0,0,15,10"/>
 
             <ComboBox
-                Grid.Row="3"
+                Grid.Row="4"
                 Grid.Column="1"
                 Width="200"
                 HorizontalAlignment="Left"
-                Margin="0,0,0,10">
-
-                <ComboBoxItem Content="Low"/>
-                <ComboBoxItem Content="Normal"/>
-                <ComboBoxItem Content="High"/>
-
-            </ComboBox>
+                Margin="0,0,0,10"
+                ItemsSource="{Binding TicketPriorities}"
+                SelectedItem="{Binding SelectedPriority, Mode=TwoWay}"/>
 
 
             <!-- Status -->
             <TextBlock
-                Grid.Row="4"
+                Grid.Row="5"
                 Grid.Column="0"
                 Text="Status:"
                 FontWeight="Bold"
                 Margin="0,0,15,10"/>
 
             <ComboBox
-                Grid.Row="4"
+                Grid.Row="5"
                 Grid.Column="1"
                 Width="200"
                 HorizontalAlignment="Left"
-                Margin="0,0,0,10">
-
-                <ComboBoxItem Content="New"/>
-                <ComboBoxItem Content="InProgress"/>
-                <ComboBoxItem Content="Resolved"/>
-
-            </ComboBox>
+                Margin="0,0,0,10"
+                ItemsSource="{Binding TicketStatuses}"
+                SelectedItem="{Binding SelectedStatus, Mode=TwoWay}"/>
 
 
             <!-- Tekniker -->
             <TextBlock
-                Grid.Row="5"
+                Grid.Row="6"
                 Grid.Column="0"
                 Text="Tekniker:"
                 FontWeight="Bold"
                 Margin="0,0,15,0"/>
 
             <ComboBox
-                Grid.Row="5"
+                Grid.Row="6"
                 Grid.Column="1"
                 Width="200"
-                HorizontalAlignment="Left">
-
-                <ComboBoxItem Content="Anna"/>
-                <ComboBoxItem Content="Erik"/>
-                <ComboBoxItem Content="Johan"/>
-
-            </ComboBox>
+                HorizontalAlignment="Left"
+                ItemsSource="{Binding Technicians}"
+                SelectedItem="{Binding SelectedTechnician, Mode=TwoWay}"/>
 
         </Grid>
 
@@ -246,7 +250,8 @@
                 Content="Spara"
                 Style="{StaticResource PrimaryButtonStyle}"
                 Margin="0,0,10,0"
-                Click="SaveButton_Click"/>  
+                Click="SaveButton_Click"/>
+
             <Button
                 Content="Tillbaka"
                 Style="{StaticResource SecondaryButtonStyle}"/>
