@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using SupportManagement.Application.Interfaces;
+using SupportManagement.Domain.Enums;
 using SupportManagement.Domain.Models;
 using System;
 using System.Linq;
@@ -18,6 +19,28 @@ public partial class ManageTicket : ObservableObject
     [ObservableProperty]
     private Customer? customer;
 
+    [ObservableProperty]
+    private TicketPriority selectedPriority;
+
+    [ObservableProperty]
+    private TicketStatus selectedStatus;
+
+    [ObservableProperty]
+    private string? selectedTechnician;
+
+    public TicketPriority[] TicketPriorities { get; } =
+        Enum.GetValues<TicketPriority>();
+
+    public TicketStatus[] TicketStatuses { get; } =
+        Enum.GetValues<TicketStatus>();
+
+    public string[] Technicians { get; } =
+    [
+        "Anna",
+        "Erik",
+        "Johan"
+    ];
+
     public ManageTicket(
         ITicketService ticketService,
         ICustomerService customerService)
@@ -32,6 +55,10 @@ public partial class ManageTicket : ObservableObject
 
         if (Ticket is null)
             return;
+
+        SelectedPriority = Ticket.Priority;
+        SelectedStatus = Ticket.Status;
+        SelectedTechnician = Ticket.ResponsibleTechnician;
 
         var customers = await _customerService.GetAllAsync();
 
