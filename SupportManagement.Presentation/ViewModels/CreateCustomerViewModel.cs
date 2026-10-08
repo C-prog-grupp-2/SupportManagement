@@ -1,11 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using SupportManagement.Application.Interfaces;
+using SupportManagement.Presentation.Navigation;
 using System;
 using System.Threading.Tasks;
 
 namespace SupportManagement.Presentation.ViewModels;
 
-public partial class CreateCustomerViewModel (ICustomerService customerService) : ObservableObject
+public partial class CreateCustomerViewModel (ICustomerService customerService, INavigationService navigationService) : ObservableObject
 {
     //CommunityToolkit generear kod som gör att Gui:t kan reagera när en property ändras.
     [ObservableProperty]
@@ -17,8 +19,8 @@ public partial class CreateCustomerViewModel (ICustomerService customerService) 
     [ObservableProperty] 
     public partial string StatusMessage { get; private set; } = string.Empty; //Visar validerings eller felmeddelanden i GUI:t.
 
-    
-    
+
+    [RelayCommand]
     public async Task SaveAsync() //Skapar en ny kund & hanterar evetuella fel från CustomerService.
     {
         StatusMessage = string.Empty;
@@ -26,6 +28,8 @@ public partial class CreateCustomerViewModel (ICustomerService customerService) 
         try
         {
             await customerService.CreateAsync(CustomerName, Email);
+
+            navigationService.Navigate(AppPage.Customers);
         }
 
         catch (ArgumentException ex)
@@ -38,5 +42,11 @@ public partial class CreateCustomerViewModel (ICustomerService customerService) 
             //Hanterar andra fel, ex om kundfilen inte kan spara.
             StatusMessage = "Kunden kunde inte sparas. Kontrollera kundfilen och försök igen.";
         }
+    }
+
+    [RelayCommand]
+    private void GoBack()
+    {
+        navigationService.Navigate(AppPage.Customers);
     }
 }

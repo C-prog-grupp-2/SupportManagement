@@ -18,6 +18,7 @@
   <ItemGroup>
     <None Remove="Styles\Buttons.xaml" />
     <None Remove="Styles\Typography.xaml" />
+    <None Remove="Views\CreateCustomerPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\CustomersPage.xaml" />
@@ -58,6 +59,11 @@
   <ItemGroup>
     <Folder Include="Styles\" />
     
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\CreateCustomerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\CustomersPage.xaml">

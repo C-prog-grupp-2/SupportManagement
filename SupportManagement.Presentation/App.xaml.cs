@@ -37,7 +37,7 @@ public partial class App : Microsoft.UI.Xaml.Application
         services.AddTransient<CustomersPage>();
 
         services.AddTransient<CreateCustomerViewModel>();
-        //services.AddTransient<CreateCustomerPage>();
+        services.AddTransient<CreateCustomerPage>();
 
         services.AddTransient<EditCustomerViewModel>();
         //services.AddTransient<EditCustomerPage>();

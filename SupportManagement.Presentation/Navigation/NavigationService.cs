@@ -16,7 +16,7 @@ public partial class NavigationService(IServiceProvider services) : ObservableOb
         CurrentPage = page switch
         {
             AppPage.Customers => services.GetRequiredService<CustomersPage>(),
-            //AppPage.CreateCustomers => services.GetRequiredService<CreateCustomerPage>(),
+            AppPage.CreateCustomers => services.GetRequiredService<CreateCustomerPage>(),
             //AppPage.EditCustomer => services.GetRequiredService<EditCustomerPage>(),
             //AppPage.TicketOverview => services.GetRequiredService<TicketOverviewPage>(),
             //AppPage.CreateTicket => services.GetRequiredService<CreateTicketPage>(),
