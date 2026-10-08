@@ -52,7 +52,7 @@
     <ProjectReference Include="..\SupportManagement.Infrastructure\SupportManagement.Infrastructure.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Navigation\" />
+    <Folder Include="Styles\" />
     <Folder Include="Views\" />
     <Folder Include="ViewModels\" />
 	<Folder Include="Styles\" />
