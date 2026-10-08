@@ -44,6 +44,12 @@ public class TicketService(
 
         return ticket;
     }
+    public async Task<Ticket?> GetTicketAsync(Guid ticketId)
+    {
+        var tickets = await ticketRepository.GetAllAsync();
+
+        return tickets.FirstOrDefault(ticket => ticket.Id == ticketId);
+    }
 
     // Tilldelar en tekniker till ett ärende.
     public async Task AssignTechnicianAsync(

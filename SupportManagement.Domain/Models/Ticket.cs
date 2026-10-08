@@ -15,8 +15,10 @@ public class Ticket
 
     public TicketPriority Priority { get; set; }
 
-    public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
+    [JsonInclude]
+    public DateTime CreatedAtUtc { get; private set; } = DateTime.UtcNow;
 
+    [JsonInclude]
     public TicketStatus Status { get; private set; } = TicketStatus.New;
 
     public List<Comment> Comments { get; set; } = [];
