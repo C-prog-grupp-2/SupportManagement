@@ -1,30 +1,50 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using SupportManagement.Application.Interfaces;
 using SupportManagement.Domain.Models;
+using SupportManagement.Presentation.Navigation;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using Windows.Media.Capture.Core;
 namespace SupportManagement.Presentation.ViewModels;
 
 
-public partial class CustomersViewModel (ICustomerService customerService): ObservableObject //lägg in INavigationService när den är klar?
+public partial class CustomersViewModel(ICustomerService customerService, INavigationService navigationService) : ObservableObject 
 {
-    //ObservableCollection används så att GUI:t kan uppdatera när kunder läggs till/tas bort.
+    //GUI:t kan uppdatera när kunder läggs till/tas bort.
     public ObservableCollection<Customer> Customers { get; } = []; // Samlingen kan inte ersättas men innehållet kan ändras. Startar tom.
 
 
     [ObservableProperty]
-    public partial Customer? SelectedCustomer { get; set; }
+    public partial Customer? SelectedCustomer { get; set; }  //Håller reda på vilken kund som är markerad i listan.
+
+
+    [ObservableProperty]
+    public partial string StatusMessage { get; private set; } = string.Empty;   //Visar felmeddelanden i Gui:t.
+
 
     public async Task LoadCustomersAsync() //Laddar kunder asynkront
     {
-        var customers = await customerService.GetAllAsync(); //Anropar metoden från Servicens List<Customer>, vi sparar den till lokala variabeln customers.
+        StatusMessage = string.Empty;
 
-        Customers.Clear(); //Tömmer GUI:s nuvarande kundlista så att man inte lägger in samma kunder flera ggr om man laddar om.
-
-        foreach(var customer in customers) //loop som går igenom alla kunder som har hämtats.
+        try
         {
-            Customers.Add(customer);
+
+            var customers = await customerService.GetAllAsync(); //Anropar metoden från Servicens List<Customer>, vi sparar den till lokala variabeln customers.
+
+            Customers.Clear(); //Tömmer GUI:s nuvarande kundlista så att man inte lägger in samma kunder flera ggr om man laddar om.
+
+            foreach (var customer in customers)
+            {
+
+                Customers.Add(customer);
+
+            }
+
+        }
+
+        catch (Exception)
+        {
+            StatusMessage = "Kunderna kunde inte läsas in. Kontrollera kundfilen.";
         }
     }
 
@@ -34,11 +54,20 @@ public partial class CustomersViewModel (ICustomerService customerService): Obse
         if (SelectedCustomer == null)
             return;
 
-        await customerService.DeleteAsync(SelectedCustomer.Id); //Ta den markerade kunden, be service radera den, ladda om listan.
+        StatusMessage = string.Empty;
 
-        await LoadCustomersAsync();
+        try
+        {
+
+            await customerService.DeleteAsync(SelectedCustomer.Id); //Ta den markerade kunden, be service radera den, ladda om listan.
+
+            await LoadCustomersAsync();
+        }
+        catch
+        {
+            StatusMessage = "Kunden kunde inte tas bort. Försök igen.";
+        }
+
     }
-
-
 
 }
