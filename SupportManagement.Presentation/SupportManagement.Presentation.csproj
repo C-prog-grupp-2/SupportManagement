@@ -16,6 +16,10 @@
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Styles\Buttons.xaml" />
+    <None Remove="Styles\Typography.xaml" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Views\CustomersPage.xaml" />
   </ItemGroup>
 
@@ -57,6 +61,16 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\CustomersPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Styles\Typography.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Styles\Buttons.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
