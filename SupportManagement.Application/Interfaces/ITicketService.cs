@@ -11,6 +11,11 @@ public interface ITicketService
     string description,
     Guid customerId,
     TicketPriority priority);
+
+    Task<Ticket?> GetTicketAsync(Guid ticketId);
+
+    Task<List<Ticket>> GetAllTicketsAsync();
+
     Task AssignTechnicianAsync(
        Guid ticketId,
        string technician);
