@@ -13,9 +13,9 @@ namespace SupportManagement.Presentation;
 public partial class App : Microsoft.UI.Xaml.Application
 {
     private readonly IServiceProvider _serviceProvider;
-    private Window? _window;                                
+    private Window? _window;
 
-   
+
     public App()
     {
         InitializeComponent();
