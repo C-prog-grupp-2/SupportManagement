@@ -40,7 +40,7 @@ public partial class App : Microsoft.UI.Xaml.Application
         services.AddTransient<CreateCustomerPage>();
 
         services.AddTransient<EditCustomerViewModel>();
-        //services.AddTransient<EditCustomerPage>();
+        services.AddTransient<EditCustomerPage>();
 
         //services.AddTransient<TicketOverviewViewModel>();
         //services.AddTransient<TicketOverviewPage>();
