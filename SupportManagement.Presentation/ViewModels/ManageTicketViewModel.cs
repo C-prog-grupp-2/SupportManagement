@@ -8,28 +8,27 @@ using System.Threading.Tasks;
 
 namespace SupportManagement.Presentation.ViewModels;
 
-public partial class ManageTicket : ObservableObject
+public partial class ManageTicketViewModel(
+    ITicketService _ticketService,
+    ICustomerService _customerService) : ObservableObject
 {
-    private readonly ITicketService _ticketService;
-    private readonly ICustomerService _customerService;
+    [ObservableProperty]
+    public partial Ticket? Ticket { get; set; }
 
     [ObservableProperty]
-    private Ticket? ticket;
+    public partial Customer? Customer { get; set; }
 
     [ObservableProperty]
-    private Customer? customer;
+    public partial TicketPriority SelectedPriority { get; set; }
 
     [ObservableProperty]
-    private TicketPriority selectedPriority;
+    public partial TicketStatus SelectedStatus { get; set; }
 
     [ObservableProperty]
-    private TicketStatus selectedStatus;
+    public partial string? SelectedTechnician { get; set; }
 
     [ObservableProperty]
-    private string? selectedTechnician;
-
-    [ObservableProperty]
-    private string commentText = string.Empty;
+    public partial string CommentText { get; set; } = string.Empty;
 
     public TicketPriority[] TicketPriorities { get; } =
         Enum.GetValues<TicketPriority>();
@@ -43,14 +42,6 @@ public partial class ManageTicket : ObservableObject
         "Erik",
         "Johan"
     ];
-
-    public ManageTicket(
-        ITicketService ticketService,
-        ICustomerService customerService)
-    {
-        _ticketService = ticketService;
-        _customerService = customerService;
-    }
 
     public async Task LoadTicketAsync(Guid ticketId)
     {

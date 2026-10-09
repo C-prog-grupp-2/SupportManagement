@@ -8,14 +8,13 @@ namespace SupportManagement.Presentation.Views;
 
 public sealed partial class ManageTicketPage : Page
 {
-    private readonly ManageTicket _viewModel;
+    private readonly ManageTicketViewModel _viewModel;
 
-    public ManageTicketPage(ManageTicket viewModel)
+    public ManageTicketPage(ManageTicketViewModel viewModel)
     {
         InitializeComponent();
 
         _viewModel = viewModel;
-
         DataContext = _viewModel;
     }
 
@@ -25,9 +24,16 @@ public sealed partial class ManageTicketPage : Page
     }
 
     private async void SaveButton_Click(
-      object sender,
-      RoutedEventArgs e)
+        object sender,
+        RoutedEventArgs e)
     {
         await _viewModel.SaveAsync();
+    }
+
+    private async void AddCommentButton_Click(
+        object sender,
+        RoutedEventArgs e)
+    {
+        await _viewModel.AddCommentAsync();
     }
 }
