@@ -53,6 +53,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
 
@@ -171,6 +172,17 @@
                 ItemsSource="{Binding Technicians}"
                 SelectedItem="{Binding SelectedTechnician, Mode=TwoWay}"/>
 
+
+            <!-- Felmeddelande -->
+            <TextBlock
+                Grid.Row="7"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Text="{Binding ErrorMessage}"
+                Foreground="Red"
+                TextWrapping="Wrap"
+                Margin="0,5,0,0"/>
+
         </Grid>
 
 
@@ -208,12 +220,33 @@
                 <!-- Lista med kommentarer -->
                 <ListBox
                     Grid.Row="1"
-                    Margin="0,0,0,15"/>
+                    Margin="0,0,0,15"
+                    ItemsSource="{Binding Ticket.Comments}">
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,0,10">
+
+                                <!-- Kommentartext -->
+                                <TextBlock
+                                    Text="{Binding CommentContent}"
+                                    TextWrapping="Wrap"/>
+
+                                <!-- Datum och tid -->
+                                <TextBlock
+                                    Text="{Binding CommentCreatedAtUtc}"
+                                    FontSize="12"
+                                    Opacity="0.7"/>
+
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
+                </ListBox>
 
 
                 <!-- Ny kommentar -->
-                <Grid
-                    Grid.Row="2">
+                <Grid Grid.Row="2">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -227,12 +260,13 @@
                         Text="{Binding CommentText, Mode=TwoWay}"
                         TextWrapping="Wrap"
                         AcceptsReturn="True"
-                        ScrollViewer.VerticalScrollBarVisibility="Auto"/>       
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"/>
 
                     <Button
                         Content="Lägg till kommentar"
                         Style="{StaticResource CommentButtonStyle}"
-                        Margin="10,0,0,0"/>
+                        Margin="10,0,0,0"
+                        Click="AddCommentButton_Click"/>
 
                 </Grid>
 

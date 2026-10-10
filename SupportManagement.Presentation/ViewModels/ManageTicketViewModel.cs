@@ -30,6 +30,9 @@ public partial class ManageTicketViewModel(
     [ObservableProperty]
     public partial string CommentText { get; set; } = string.Empty;
 
+    [ObservableProperty]
+    public partial string ErrorMessage { get; set; } = string.Empty;
+
     public TicketPriority[] TicketPriorities { get; } =
         Enum.GetValues<TicketPriority>();
 
@@ -50,6 +53,11 @@ public partial class ManageTicketViewModel(
         if (Ticket is null)
             return;
 
+        // Sorterar kommentarerna från äldst till nyast.
+        Ticket.Comments = Ticket.Comments
+            .OrderBy(comment => comment.CommentCreatedAtUtc)
+            .ToList();
+
         SelectedPriority = Ticket.Priority;
         SelectedStatus = Ticket.Status;
         SelectedTechnician = Ticket.ResponsibleTechnician;
@@ -62,46 +70,92 @@ public partial class ManageTicketViewModel(
 
     public async Task SaveAsync()
     {
+        ErrorMessage = string.Empty;
+
         if (Ticket is null)
-            return;
-
-        await _ticketService.UpdateDetailsAsync(
-            Ticket.Id,
-            Ticket.Title,
-            Ticket.Description);
-
-        await _ticketService.ChangePriorityAsync(
-            Ticket.Id,
-            SelectedPriority);
-
-        if (!string.IsNullOrWhiteSpace(SelectedTechnician))
         {
-            await _ticketService.AssignTechnicianAsync(
-                Ticket.Id,
-                SelectedTechnician);
+            ErrorMessage = "Inget ärende har laddats.";
+            return;
         }
 
-        await _ticketService.ChangeStatusAsync(
-            Ticket.Id,
-            SelectedStatus);
+        try
+        {
+            var ticketId = Ticket.Id;
+            var technician = SelectedTechnician;
 
-        await LoadTicketAsync(Ticket.Id);
+
+            await _ticketService.UpdateDetailsAsync(
+                ticketId,
+                Ticket.Title,
+                Ticket.Description);
+
+            await _ticketService.ChangePriorityAsync(
+                ticketId,
+                SelectedPriority);
+
+
+            if (!string.IsNullOrWhiteSpace(technician))
+            {
+                await _ticketService.AssignTechnicianAsync(
+                    ticketId,
+                    technician);
+            }
+
+            await _ticketService.ChangeStatusAsync(
+                ticketId,
+                SelectedStatus);
+
+            await LoadTicketAsync(ticketId);
+        }
+        catch (ArgumentException ex)
+        {
+            ErrorMessage = ex.Message;
+        }
+        catch (InvalidOperationException ex)
+        {
+            ErrorMessage = ex.Message;
+        }
+        catch (Exception)
+        {
+            ErrorMessage = "Det gick inte att spara ärendet. Försök igen.";
+        }
     }
 
     public async Task AddCommentAsync()
     {
+        ErrorMessage = string.Empty;
+
         if (Ticket is null)
+        {
+            ErrorMessage = "Inget ärende har laddats.";
             return;
+        }
 
         if (string.IsNullOrWhiteSpace(CommentText))
+        {
+            ErrorMessage = "Skriv en kommentar innan du lägger till den.";
             return;
+        }
 
-        await _ticketService.AddCommentAsync(
-            Ticket.Id,
-            CommentText);
+        try
+        {
+            await _ticketService.AddCommentAsync(
+                Ticket.Id,
+                CommentText);
 
-        CommentText = string.Empty;
+            CommentText = string.Empty;
 
-        await LoadTicketAsync(Ticket.Id);
+            await LoadTicketAsync(Ticket.Id);
+        }
+        catch (ArgumentException ex)
+        {
+            ErrorMessage = ex.Message;
+        }
+        catch (Exception)
+        {
+            ErrorMessage = "Det gick inte att lägga till kommentaren. Försök igen.";
+        }
     }
+
+
 }
