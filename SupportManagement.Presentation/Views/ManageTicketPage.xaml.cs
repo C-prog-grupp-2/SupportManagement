@@ -8,32 +8,31 @@ namespace SupportManagement.Presentation.Views;
 
 public sealed partial class ManageTicketPage : Page
 {
-    private readonly ManageTicketViewModel _viewModel;
+    public ManageTicketViewModel ViewModel { get; }
 
     public ManageTicketPage(ManageTicketViewModel viewModel)
     {
-        InitializeComponent();
+        ViewModel = viewModel;
 
-        _viewModel = viewModel;
-        DataContext = _viewModel;
+        InitializeComponent();
     }
 
     public async Task LoadTicketAsync(Guid ticketId)
     {
-        await _viewModel.LoadTicketAsync(ticketId);
+        await ViewModel.LoadTicketAsync(ticketId);
     }
 
     private async void SaveButton_Click(
         object sender,
         RoutedEventArgs e)
     {
-        await _viewModel.SaveAsync();
+        await ViewModel.SaveAsync();
     }
 
     private async void AddCommentButton_Click(
         object sender,
         RoutedEventArgs e)
     {
-        await _viewModel.AddCommentAsync();
+        await ViewModel.AddCommentAsync();
     }
 }
