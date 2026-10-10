@@ -13,4 +13,5 @@
     <Platform Solution="*|x86" Project="x86" />
     <Deploy />
   </Project>
+  <Project Path="SupportManagement.Tests/SupportManagement.Tests.csproj" Id="21a0000a-cbc1-47f9-a6d2-390cf8c00a82" />
 </Solution>
