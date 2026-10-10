@@ -48,20 +48,30 @@ public partial class ManageTicketViewModel(
 
     public async Task LoadTicketAsync(Guid ticketId)
     {
+        // Rensa gamla felmeddelanden.
+        ErrorMessage = string.Empty;
+
+        // Hämta ärendet.
         Ticket = await _ticketService.GetTicketAsync(ticketId);
 
+        // Visa ett tydligt fel om ärendet inte hittades.
         if (Ticket is null)
+        {
+            ErrorMessage = "Ärendet kunde inte hittas.";
             return;
+        }
 
-        // Sorterar kommentarerna från äldst till nyast.
+        // Sortera kommentarerna från äldst till nyast.
         Ticket.Comments = Ticket.Comments
             .OrderBy(comment => comment.CommentCreatedAtUtc)
             .ToList();
 
+        // Hämta ärendets valda värden.
         SelectedPriority = Ticket.Priority;
         SelectedStatus = Ticket.Status;
         SelectedTechnician = Ticket.ResponsibleTechnician;
 
+        // Hämta kunderna och hitta kunden som hör till ärendet.
         var customers = await _customerService.GetAllAsync();
 
         Customer = customers.FirstOrDefault(

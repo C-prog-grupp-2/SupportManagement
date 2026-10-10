@@ -27,14 +27,12 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-
         <!-- RUBRIK -->
         <TextBlock
             Grid.Row="0"
             Text="TicketDetails"
             Style="{StaticResource PageTitleStyle}"
             Margin="0,0,0,25"/>
-
 
         <!-- INFORMATION OM TICKET -->
         <Grid
@@ -57,7 +55,6 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-
             <!-- Titel -->
             <TextBlock
                 Grid.Row="0"
@@ -71,7 +68,6 @@
                 Grid.Column="1"
                 Text="{x:Bind ViewModel.Ticket.Title, Mode=TwoWay}"
                 Margin="0,0,0,10"/>
-
 
             <!-- Beskrivning -->
             <TextBlock
@@ -90,7 +86,6 @@
                 AcceptsReturn="True"
                 Margin="0,0,0,10"/>
 
-
             <!-- Kund -->
             <TextBlock
                 Grid.Row="2"
@@ -102,9 +97,8 @@
             <TextBlock
                 Grid.Row="2"
                 Grid.Column="1"
-                Text="{x:Bind ViewModel.Customer.Name}"
+                Text="{x:Bind ViewModel.Customer.Name, Mode=OneWay}"
                 Margin="0,0,0,10"/>
-
 
             <!-- E-post -->
             <TextBlock
@@ -117,9 +111,8 @@
             <TextBlock
                 Grid.Row="3"
                 Grid.Column="1"
-                Text="{x:Bind ViewModel.Customer.Email}"
+                Text="{x:Bind ViewModel.Customer.Email, Mode=OneWay}"
                 Margin="0,0,0,10"/>
-
 
             <!-- Prioritet -->
             <TextBlock
@@ -138,7 +131,6 @@
                 ItemsSource="{x:Bind ViewModel.TicketPriorities}"
                 SelectedItem="{x:Bind ViewModel.SelectedPriority, Mode=TwoWay}"/>
 
-
             <!-- Status -->
             <TextBlock
                 Grid.Row="5"
@@ -156,7 +148,6 @@
                 ItemsSource="{x:Bind ViewModel.TicketStatuses}"
                 SelectedItem="{x:Bind ViewModel.SelectedStatus, Mode=TwoWay}"/>
 
-
             <!-- Tekniker -->
             <TextBlock
                 Grid.Row="6"
@@ -173,23 +164,22 @@
                 ItemsSource="{x:Bind ViewModel.Technicians}"
                 SelectedItem="{x:Bind ViewModel.SelectedTechnician, Mode=TwoWay}"/>
 
-
             <!-- Felmeddelande -->
             <TextBlock
                 Grid.Row="7"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                Text="{x:Bind ViewModel.ErrorMessage}"
+                Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
                 Foreground="Red"
                 TextWrapping="Wrap"
                 Margin="0,5,0,0"/>
 
         </Grid>
 
-
         <!-- KOMMENTARER -->
         <Border
             Grid.Row="2"
+            MinHeight="240"
             BorderBrush="Gray"
             BorderThickness="1"
             CornerRadius="5"
@@ -202,13 +192,15 @@
                     <!-- Kommentar-rubrik -->
                     <RowDefinition Height="Auto"/>
 
-                    <!-- Lista med kommentarer -->
-                    <RowDefinition Height="*"/>
+                    <!-- Listan tar bara den plats den behöver -->
+                    <RowDefinition Height="Auto"/>
 
-                    <!-- Ny kommentar -->
+                    <!-- Textruta för ny kommentar -->
+                    <RowDefinition Height="Auto"/>
+
+                    <!-- Knapp på en egen rad -->
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-
 
                 <!-- Kommentar-rubrik -->
                 <TextBlock
@@ -217,12 +209,13 @@
                     Style="{StaticResource SectionTitleStyle}"
                     Margin="0,0,0,10"/>
 
-
                 <!-- Lista med kommentarer -->
                 <ListBox
                     Grid.Row="1"
-                    Margin="0,0,0,15"
-                    ItemsSource="{x:Bind ViewModel.Ticket.Comments}">
+                    MinHeight="0"
+                    MaxHeight="140"
+                    Margin="0,0,0,10"
+                    ItemsSource="{x:Bind ViewModel.Ticket.Comments, Mode=OneWay}">
 
                     <ListBox.ItemTemplate>
                         <DataTemplate x:DataType="models:Comment">
@@ -245,36 +238,28 @@
 
                 </ListBox>
 
+                <!-- Textruta där användaren skriver -->
+                <TextBox
+                    Grid.Row="2"
+                    Height="70"
+                    Text="{x:Bind ViewModel.CommentText, Mode=TwoWay}"
+                    PlaceholderText="Skriv din kommentar här..."
+                    TextWrapping="Wrap"
+                    AcceptsReturn="True"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    Margin="0,0,0,10"/>
 
-                <!-- Ny kommentar -->
-                <Grid Grid.Row="2">
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-
-                    <TextBox
-                        Grid.Column="0"
-                        Height="60"
-                        Text="{x:Bind ViewModel.CommentText, Mode=TwoWay}"
-                        TextWrapping="Wrap"
-                        AcceptsReturn="True"
-                        ScrollViewer.VerticalScrollBarVisibility="Auto"/>
-
-                    <Button
-                        Content="Lägg till kommentar"
-                        Style="{StaticResource CommentButtonStyle}"
-                        Margin="10,0,0,0"
-                        Click="AddCommentButton_Click"/>
-
-                </Grid>
+                <!-- Knappen ligger under textrutan -->
+                <Button
+                    Grid.Row="3"
+                    Content="Lägg till kommentar"
+                    Style="{StaticResource CommentButtonStyle}"
+                    HorizontalAlignment="Right"
+                    Click="AddCommentButton_Click"/>
 
             </Grid>
 
         </Border>
-
 
         <!-- KNAPPAR -->
         <StackPanel
