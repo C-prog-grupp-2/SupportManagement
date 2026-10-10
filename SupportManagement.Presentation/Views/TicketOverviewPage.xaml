@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="SupportManagement.Presentation.Views.TicketOverviewPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:models="using:SupportManagement.Domain.Models">
+
+    <Grid Padding="24" RowSpacing="32">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- SIDRUBRIK OCH NAVIGATION -->
+        <Grid Grid.Row="0" ColumnSpacing="16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Spacing="6">
+                <TextBlock
+                    Text="Ärendeöversikt"
+                    Style="{StaticResource PageTitleStyle}"/>
+
+                <TextBlock
+                    Text="Överblick över öppna supportärenden"
+                    Style="{StaticResource BodyTextStyle}"
+                    TextWrapping="WrapWholeWords"/>
+            </StackPanel>
+
+            <StackPanel
+                Grid.Column="1"
+                Orientation="Horizontal"
+                VerticalAlignment="Center"
+                Spacing="12">
+
+                <Button
+                    Content="+ Nytt ärende"
+                    Width="140"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Command="{x:Bind ViewModel.NavigateToTicketRegistrationCommand}"/>
+
+                <Button
+                    Content="Hantera ärenden"
+                    Width="160"
+                    Style="{StaticResource SecondaryButtonStyle}"
+                    Command="{x:Bind ViewModel.NavigateToTicketManagementCommand}"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- ANTAL ÄRENDEN -->
+        <Grid Grid.Row="1" ColumnSpacing="32">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Spacing="6">
+                <TextBlock
+                    Text="Öppna ärenden"
+                    Style="{StaticResource SectionTitleStyle}"/>
+                <TextBlock
+                    Text="{x:Bind ViewModel.OpenTicketCount, Mode=OneWay}"
+                    Style="{StaticResource PageTitleStyle}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Spacing="6">
+                <TextBlock
+                    Text="Nya ärenden"
+                    Style="{StaticResource SectionTitleStyle}"/>
+                <TextBlock
+                    Text="{x:Bind ViewModel.NewTicketCount, Mode=OneWay}"
+                    Style="{StaticResource PageTitleStyle}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="2" Spacing="6">
+                <TextBlock
+                    Text="Öppna med hög prioritet"
+                    Style="{StaticResource SectionTitleStyle}"
+                    TextWrapping="WrapWholeWords"/>
+                <TextBlock
+                    Text="{x:Bind ViewModel.HighPriorityTicketCount, Mode=OneWay}"
+                    Style="{StaticResource PageTitleStyle}"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- LISTA MED ÖPPNA ÄRENDEN -->
+        <Grid Grid.Row="2" RowSpacing="12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Text="Öppna ärenden"
+                Style="{StaticResource SectionTitleStyle}"/>
+
+            <Grid Grid.Row="1" ColumnSpacing="16" Margin="12,0,12,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Rubrik" FontWeight="SemiBold"/>
+                <TextBlock Grid.Column="1"
+                           Text="Status"
+                           FontWeight="SemiBold"/>
+                <TextBlock Grid.Column="2"
+                           Text="Prioritet"
+                           FontWeight="SemiBold"/>
+            </Grid>
+
+            <ListView
+                Grid.Row="2"
+                ItemsSource="{x:Bind ViewModel.OpenTickets, Mode=OneWay}"
+                SelectionMode="None">
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Ticket">
+                        <Grid ColumnSpacing="16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock
+                                Text="{x:Bind Title}"
+                                TextTrimming="CharacterEllipsis"/>
+
+                            <TextBlock
+                                Grid.Column="1"
+                                Text="{x:Bind Status}"/>
+
+                            <TextBlock
+                                Grid.Column="2"
+                                Text="{x:Bind Priority}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </Grid>
+</Page>

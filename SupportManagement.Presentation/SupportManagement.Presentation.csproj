@@ -17,6 +17,7 @@
   <ItemGroup>
     <None Remove="Styles\Buttons.xaml" />
     <None Remove="Styles\Typography.xaml" />
+    <None Remove="Views\TicketOverviewPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,15 +53,17 @@
     <ProjectReference Include="..\SupportManagement.Infrastructure\SupportManagement.Infrastructure.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\" />
-  </ItemGroup>
-  <ItemGroup>
     <Page Update="Styles\Typography.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Styles\Buttons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\TicketOverviewPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
