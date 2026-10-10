@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="SupportManagement.Presentation.Views.EditCustomerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SupportManagement.Presentation.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Padding="24">
+        <StackPanel Spacing="20"
+                    MaxWidth="500"
+                    HorizontalAlignment="Left">
+
+            <!--SIDORUBRIK-->
+            <TextBlock Text="Redigera kund"
+                       Style="{StaticResource PageTitleStyle}" />
+
+            <TextBlock Text="Ändra kundens uppgifter nedan:"
+                       Style ="{StaticResource BodyTextStyle}" />
+
+            <!--KUNDUPPGIFTER-->
+            <StackPanel Spacing="6">
+                <TextBlock Text="Namn /Företag"
+                           Style="{StaticResource BodyTextStyle}"/>
+
+                <TextBox PlaceholderText="Namn eller företagsnamn"
+                         Width="480"
+                         Height="44"
+                         HorizontalAlignment="Left"   
+                         Text="{x:Bind ViewModel.CustomerName, Mode=TwoWay}"/>
+
+            </StackPanel>
+
+            <StackPanel Spacing="6">
+                <TextBlock Text="E-postadress"
+                           Style="{StaticResource BodyTextStyle}"/>
+
+                <TextBox PlaceholderText="E-postadress"
+                         Width="480"
+                         Height="44"
+                         HorizontalAlignment="Left"    
+                         Text="{x:Bind ViewModel.Email, Mode=TwoWay}"/>
+
+
+                <!--FELMEDDELANDE-->
+                <TextBlock Text="{x:Bind ViewModel.StatusMessage, Mode=OneWay}"
+                           Foreground="{x:Bind ViewModel.StatusColor, Mode=OneWay}"
+                           TextWrapping="WrapWholeWords"/>
+
+                <!--KNAPPAR-->
+                <StackPanel Orientation="Horizontal" 
+                           Spacing="12">
+
+                    <Button Content="Spara"
+                           Width="120"
+                           Height="44"
+                           Style="{StaticResource PrimaryButtonStyle}"
+                           Command="{x:Bind ViewModel.SaveCommand}"/>
+
+                    <Button Content="Tillbaka"
+                            Width="120"
+                            Height="44"
+                           Style="{StaticResource SecondaryButtonStyle}"
+                           Command="{x:Bind ViewModel.GoBackCommand}"/>
+
+                </StackPanel>
+
+
+            </StackPanel>
+
+        </StackPanel>
+
+    </Grid>
+</Page>

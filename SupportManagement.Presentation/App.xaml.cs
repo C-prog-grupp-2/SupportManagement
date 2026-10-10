@@ -2,6 +2,7 @@
 using SupportManagement.Application.Services;
 using SupportManagement.Presentation.Navigation;
 using SupportManagement.Presentation.ViewModels;
+using SupportManagement.Presentation.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -33,14 +34,14 @@ public partial class App : Microsoft.UI.Xaml.Application
         services.AddSingleton<ITicketService, TicketService>();
         services.AddSingleton<ICustomerService, CustomerService>();
 
-        //services.AddTransient<CustomersViewModel>();
-        //services.AddTransient<CustomersPage>();
+        services.AddTransient<CustomersViewModel>();
+        services.AddTransient<CustomersPage>();
 
-        //services.AddTransient<CreateCustomerViewModel>();
-        //services.AddTransient<CreateCustomerPage>();
+        services.AddTransient<CreateCustomerViewModel>();
+        services.AddTransient<CreateCustomerPage>();
 
-        //services.AddTransient<EditCustomerViewModel>();
-        //services.AddTransient<EditCustomerPage>();
+        services.AddSingleton<EditCustomerViewModel>();
+        services.AddTransient<EditCustomerPage>();
 
         //services.AddTransient<TicketOverviewViewModel>();
         //services.AddTransient<TicketOverviewPage>();
