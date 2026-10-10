@@ -12,12 +12,17 @@
     <WinUISDKReferences>false</WinUISDKReferences>
     <EnableMsixTooling>true</EnableMsixTooling>
     <Nullable>enable</Nullable>
+	  <LangVersion>preview</LangVersion>
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Styles\Buttons.xaml" />
     <None Remove="Styles\Typography.xaml" />
-    <None Remove="Views\TicketOverviewPage.xaml" />
+    <None Remove="Views\CreateCustomerPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Views\CustomersPage.xaml" />
+	<None Remove="Views\EditCustomerPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,7 +58,19 @@
     <ProjectReference Include="..\SupportManagement.Infrastructure\SupportManagement.Infrastructure.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Styles\Typography.xaml">
+    <Folder Include="Styles\" />
+    
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\EditCustomerPage.xaml">
+	  <Generator>MSBuild:Compile</Generator>
+	  </Page>
+    <Page Update="Views\CreateCustomerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\CustomersPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
