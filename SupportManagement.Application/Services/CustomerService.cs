@@ -5,7 +5,7 @@ using System.Net.Mail;
 
 namespace SupportManagement.Application.Services;
 
-public class CustomerService (ICustomerRepository customerRepository) : ICustomerService
+public class CustomerService (ICustomerRepository customerRepository, ITicketRepository ticketRepository) : ICustomerService
 {
     public Task<List<Customer>> GetAllAsync() 
     {
@@ -43,6 +43,15 @@ public class CustomerService (ICustomerRepository customerRepository) : ICustome
 
     public async Task DeleteAsync(Guid customerId)
     {
+        var tickets = await ticketRepository.GetAllAsync();
+
+        bool hasTickets = tickets.Any(ticket => ticket.CustomerId == customerId);
+
+        if (hasTickets)
+        {
+            throw new InvalidOperationException("Kunden kan inte tas bort eftersom det finns ett öppet ärende");
+        }
+        
         var customers = await customerRepository.GetAllAsync();
        
         var removeCount = customers.RemoveAll(customer => customer.Id == customerId); //Tar bort kunden vars id matchar customerId & sparar antalet borttagna kunder.
