@@ -26,7 +26,10 @@
                            Style="{StaticResource BodyTextStyle}"/>
 
                 <TextBox PlaceholderText="Ange namn eller företagsnamn"
-                         Text="{x:Bind ViewModel.CustomerName, Mode=TwoWay}"/>
+                          Width="480"
+                          Height="44"
+                          HorizontalAlignment="Left"
+                          Text="{x:Bind ViewModel.CustomerName, Mode=TwoWay}"/>
 
             </StackPanel>
 
@@ -35,7 +38,10 @@
                            Style="{StaticResource BodyTextStyle}"/>
 
                 <TextBox PlaceholderText="Ange e-postadress"
-                         Text="{x:Bind ViewModel.Email, Mode=TwoWay}"/>
+                          Width="480"
+                          Height="44"
+                          HorizontalAlignment="Left"
+                          Text="{x:Bind ViewModel.Email, Mode=TwoWay}"/>
 
 
             <!--FELMEDDELANDE-->
@@ -48,12 +54,16 @@
                            Spacing="12">
 
                     <Button Content="Spara"
-                           Style="{StaticResource PrimaryButtonStyle}"
-                           Command="{x:Bind ViewModel.SaveCommand}"/>
+                            Width="120"
+                            Height="44"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Command="{x:Bind ViewModel.SaveCommand}"/>
 
                     <Button Content="Tillbaka"
-                           Style="{StaticResource SecondaryButtonStyle}"
-                           Command="{x:Bind ViewModel.GoBackCommand}"/>
+                            Width="120"
+                            Height="44"
+                            Style="{StaticResource SecondaryButtonStyle}"
+                            Command="{x:Bind ViewModel.GoBackCommand}"/>
 
                 </StackPanel>
 
