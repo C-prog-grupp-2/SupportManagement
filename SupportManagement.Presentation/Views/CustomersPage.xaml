@@ -111,14 +111,21 @@
                 </ListView.ItemTemplate>
             </ListView>
             </StackPanel>
+            
+            <!--FELMEDDELANDEN-->
+            <TextBlock Text="{x:Bind ViewModel.StatusMessage,Mode=OneWay}"
+                     Foreground="IndianRed"
+                     TextWrapping="WrapWholeWords" />
 
+            
             <!--KNAPPAR FÖR VALD KUND-->
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right"
                         Spacing="12">
 
                 <Button Content="Redigera"
-                        Style="{StaticResource SecondaryButtonStyle}"/>
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        Command="{x:Bind ViewModel.GoToEditCustomerCommand}"/>
 
                 <Button Content="Ta bort"
                         Style="{StaticResource SecondaryButtonStyle}"
@@ -128,11 +135,7 @@
             </StackPanel>
 
 
-            <!--FELMEDDELANDEN-->
-            <TextBlock Text="{x:Bind ViewModel.StatusMessage,Mode=OneWay}"
-                       Foreground="IndianRed"
-                       TextWrapping="WrapWholeWords" />
-
+  
         </StackPanel>
     </Grid>
 </Page>
