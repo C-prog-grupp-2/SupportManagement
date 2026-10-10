@@ -5,7 +5,7 @@ using System.Net.Mail;
 
 namespace SupportManagement.Application.Services;
 
-public class CustomerService (ICustomerRepository customerRepository) : ICustomerService
+public class CustomerService (ICustomerRepository customerRepository, ITicketRepository ticketRepository) : ICustomerService
 {
     public Task<List<Customer>> GetAllAsync() 
     {
@@ -14,62 +14,27 @@ public class CustomerService (ICustomerRepository customerRepository) : ICustome
 
     public async Task CreateAsync(string name, string email)
     {
-        //Kontrollera input namn om den är tom eller har blanksteg.Generera felmeddelande.
-        if (string.IsNullOrWhiteSpace(name)) 
-            throw new ArgumentException("Ange kundens namn eller företagsnamn.");
-        
-
-        //Kontrollera input email om den är tom eller har blanksteg.
-        if (string.IsNullOrWhiteSpace(email))
-            throw new ArgumentException("Ange en e-postadress.");
-
-        name = name.Trim(); 
-        email = email.Trim();
-
-        //Kontrollera att e-postadressen har ett giltigt format.
-        if (!MailAddress.TryCreate(email, out var address) || address.Address != email)
-            throw new ArgumentException("Ange en giltig e-postadress.");
-
-
         var customers = await customerRepository.GetAllAsync(); //Hämta de kunder som redan finns & lägg listan i variablen customers.
 
-        customers.Add(new Customer //lägger kunden i listan (namn & mejl)
-        {
-            Name = name,
-            Email = email
-        }); 
+       // Skapar en ny kund och validerar namn och e-post via Customer.
+        customers.Add(new Customer(name, email));
 
-        await customerRepository.SaveAllAsync(customers); //spara listan - awaita tills sparningen är klar innan CreateAsync är färdig
-        
-        }
+        await customerRepository.SaveAllAsync(customers); //spara listan - awaita tills sparningen är klar innan CreateAsync är färdig    
+    }
 
    
     public async Task UpdateAsync(Guid customerId, string name, string email)
     {
-        //Kontrollera input namn om den är tom eller har blanksteg. Generera felmeddelande.
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Ange kundens namn eller företagsnamn.");
-
-        //Kontrollera input email om den är tom eller har blanksteg.Generera felmeddelande.
-        if (string.IsNullOrWhiteSpace(email))
-            throw new ArgumentException("Ange en e-postadress");
-
-        name = name.Trim();
-        email = email.Trim();
-
-        //Kontrollera att e-postadressen har ett giltigt format.
-        if (!MailAddress.TryCreate(email, out var address) || address.Address != email)
-                throw new ArgumentException("Ange en giltig e-postadress.");
-
         var customers = await customerRepository.GetAllAsync();
 
         var customer = customers.FirstOrDefault(customer =>customer.Id == customerId);//Hitta rätt kund via Id
 
         if (customer == null) // Om ingen kund med detta Id hittades, avbryt.
-            return;
+        {
+            throw new ArgumentException("Kunden kunde inte hittas.");   
+        }
 
-        customer.Name = name; // Uppdaterar kundens namn och e-postadress.
-        customer.Email = email;
+        customer.UpdateDetails(name, email);
 
         await customerRepository.SaveAllAsync(customers);
     }
@@ -78,6 +43,15 @@ public class CustomerService (ICustomerRepository customerRepository) : ICustome
 
     public async Task DeleteAsync(Guid customerId)
     {
+        var tickets = await ticketRepository.GetAllAsync();
+
+        bool hasTickets = tickets.Any(ticket => ticket.CustomerId == customerId);
+
+        if (hasTickets)
+        {
+            throw new InvalidOperationException("Kunden kan inte tas bort eftersom det finns ett öppet ärende");
+        }
+        
         var customers = await customerRepository.GetAllAsync();
        
         var removeCount = customers.RemoveAll(customer => customer.Id == customerId); //Tar bort kunden vars id matchar customerId & sparar antalet borttagna kunder.
