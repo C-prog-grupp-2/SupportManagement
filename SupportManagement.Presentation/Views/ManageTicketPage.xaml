@@ -272,10 +272,10 @@
                 Style="{StaticResource PrimaryButtonStyle}"
                 Margin="0,0,10,0"
                 Click="SaveButton_Click"/>
-
             <Button
-                Content="Tillbaka"
-                Style="{StaticResource SecondaryButtonStyle}"/>
+    Content="Tillbaka"
+    Style="{StaticResource SecondaryButtonStyle}"
+    Command="{x:Bind ViewModel.GoBackCommand}" />
 
         </StackPanel>
 

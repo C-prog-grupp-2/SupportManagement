@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using SupportManagement.Application.Interfaces;
 using SupportManagement.Domain.Enums;
 using SupportManagement.Domain.Models;
+using SupportManagement.Presentation.Navigation;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +12,8 @@ namespace SupportManagement.Presentation.ViewModels;
 
 public partial class ManageTicketViewModel(
     ITicketService _ticketService,
-    ICustomerService _customerService) : ObservableObject
+    ICustomerService _customerService,
+    INavigationService _navigationService) : ObservableObject
 {
     [ObservableProperty]
     public partial Ticket? Ticket { get; set; }
@@ -48,34 +51,50 @@ public partial class ManageTicketViewModel(
 
     public async Task LoadTicketAsync(Guid ticketId)
     {
-        // Rensa gamla felmeddelanden.
         ErrorMessage = string.Empty;
 
-        // Hämta ärendet.
-        Ticket = await _ticketService.GetTicketAsync(ticketId);
+        // Rensa tidigare data innan ett nytt ärende laddas.
+        Ticket = null;
+        Customer = null;
+        SelectedTechnician = null;
+        CommentText = string.Empty;
 
-        // Visa ett tydligt fel om ärendet inte hittades.
-        if (Ticket is null)
+        try
         {
-            ErrorMessage = "Ärendet kunde inte hittas.";
-            return;
+            var ticket = await _ticketService.GetTicketAsync(ticketId);
+
+            if (ticket is null)
+            {
+                ErrorMessage = "Ärendet kunde inte hittas.";
+                return;
+            }
+
+            var customers = await _customerService.GetAllAsync();
+
+            // Sortera kommentarer från äldst till nyast.
+            ticket.Comments = ticket.Comments
+                .OrderBy(comment => comment.CommentCreatedAtUtc)
+                .ToList();
+
+            Ticket = ticket;
+
+            // Hämta kunden som hör till ärendet.
+            Customer = customers.FirstOrDefault(
+                customer => customer.Id == ticket.CustomerId);
+
+            // Fyll formuläret med ärendets aktuella värden.
+            SelectedPriority = ticket.Priority;
+            SelectedStatus = ticket.Status;
+            SelectedTechnician = ticket.ResponsibleTechnician;
         }
+        catch (Exception)
+        {
+            Ticket = null;
+            Customer = null;
 
-        // Sortera kommentarerna från äldst till nyast.
-        Ticket.Comments = Ticket.Comments
-            .OrderBy(comment => comment.CommentCreatedAtUtc)
-            .ToList();
-
-        // Hämta ärendets valda värden.
-        SelectedPriority = Ticket.Priority;
-        SelectedStatus = Ticket.Status;
-        SelectedTechnician = Ticket.ResponsibleTechnician;
-
-        // Hämta kunderna och hitta kunden som hör till ärendet.
-        var customers = await _customerService.GetAllAsync();
-
-        Customer = customers.FirstOrDefault(
-            customer => customer.Id == Ticket.CustomerId);
+            ErrorMessage =
+                "Ärendet kunde inte hämtas. Försök igen.";
+        }
     }
 
     public async Task SaveAsync()
@@ -88,22 +107,33 @@ public partial class ManageTicketViewModel(
             return;
         }
 
+        // Kontrollera status och tekniker innan något sparas.
+        if ((SelectedStatus == TicketStatus.InProgress ||
+             SelectedStatus == TicketStatus.Resolved) &&
+            string.IsNullOrWhiteSpace(SelectedTechnician))
+        {
+            ErrorMessage =
+                "Välj en ansvarig tekniker innan ärendet sätts till Pågående eller Löst.";
+            return;
+        }
+
         try
         {
             var ticketId = Ticket.Id;
             var technician = SelectedTechnician;
 
-
+            // Spara rubrik och beskrivning.
             await _ticketService.UpdateDetailsAsync(
                 ticketId,
                 Ticket.Title,
                 Ticket.Description);
 
+            // Spara prioritet.
             await _ticketService.ChangePriorityAsync(
                 ticketId,
                 SelectedPriority);
 
-
+            // Tilldela tekniker om en är vald.
             if (!string.IsNullOrWhiteSpace(technician))
             {
                 await _ticketService.AssignTechnicianAsync(
@@ -111,10 +141,12 @@ public partial class ManageTicketViewModel(
                     technician);
             }
 
+            // Spara status.
             await _ticketService.ChangeStatusAsync(
                 ticketId,
                 SelectedStatus);
 
+            // Hämta de uppdaterade uppgifterna.
             await LoadTicketAsync(ticketId);
         }
         catch (ArgumentException ex)
@@ -127,7 +159,8 @@ public partial class ManageTicketViewModel(
         }
         catch (Exception)
         {
-            ErrorMessage = "Det gick inte att spara ärendet. Försök igen.";
+            ErrorMessage =
+                "Det gick inte att spara ärendet. Försök igen.";
         }
     }
 
@@ -143,19 +176,23 @@ public partial class ManageTicketViewModel(
 
         if (string.IsNullOrWhiteSpace(CommentText))
         {
-            ErrorMessage = "Skriv en kommentar innan du lägger till den.";
+            ErrorMessage =
+                "Skriv en kommentar innan du lägger till den.";
             return;
         }
 
         try
         {
+            var ticketId = Ticket.Id;
+
             await _ticketService.AddCommentAsync(
-                Ticket.Id,
+                ticketId,
                 CommentText);
 
             CommentText = string.Empty;
 
-            await LoadTicketAsync(Ticket.Id);
+            // Ladda om ärendet så att den nya kommentaren visas.
+            await LoadTicketAsync(ticketId);
         }
         catch (ArgumentException ex)
         {
@@ -163,9 +200,14 @@ public partial class ManageTicketViewModel(
         }
         catch (Exception)
         {
-            ErrorMessage = "Det gick inte att lägga till kommentaren. Försök igen.";
+            ErrorMessage =
+                "Det gick inte att lägga till kommentaren. Försök igen.";
         }
     }
 
-
+    [RelayCommand]
+    private void GoBack()
+    {
+        _navigationService.Navigate(AppPage.TicketOverview);
+    }
 }

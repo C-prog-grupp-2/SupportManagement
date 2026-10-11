@@ -1,8 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using SupportManagement.Presentation.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
+using SupportManagement.Presentation.Views;
 using System;
+using System.Threading.Tasks;
 
 namespace SupportManagement.Presentation.Navigation;
 
@@ -34,6 +35,14 @@ public partial class NavigationService(IServiceProvider services) : ObservableOb
         var page = services.GetRequiredService<TicketDetailsPage>();
 
         page.ViewModel.Initialize(ticketId);
+
+        CurrentPage = page;
+    }
+    public async Task NavigateToManageTicketAsync(Guid ticketId)
+    {
+        var page = services.GetRequiredService<ManageTicketPage>();
+
+        await page.LoadTicketAsync(ticketId);
 
         CurrentPage = page;
     }

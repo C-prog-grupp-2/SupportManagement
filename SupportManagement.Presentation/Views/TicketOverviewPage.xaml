@@ -73,6 +73,7 @@
                 <TextBlock
                     Text="Öppna ärenden"
                     Style="{StaticResource SectionTitleStyle}"/>
+
                 <TextBlock
                     Text="{x:Bind ViewModel.OpenTicketCount, Mode=OneWay}"
                     Style="{StaticResource PageTitleStyle}"/>
@@ -82,6 +83,7 @@
                 <TextBlock
                     Text="Nya ärenden"
                     Style="{StaticResource SectionTitleStyle}"/>
+
                 <TextBlock
                     Text="{x:Bind ViewModel.NewTicketCount, Mode=OneWay}"
                     Style="{StaticResource PageTitleStyle}"/>
@@ -92,6 +94,7 @@
                     Text="Öppna med hög prioritet"
                     Style="{StaticResource SectionTitleStyle}"
                     TextWrapping="WrapWholeWords"/>
+
                 <TextBlock
                     Text="{x:Bind ViewModel.HighPriorityTicketCount, Mode=OneWay}"
                     Style="{StaticResource PageTitleStyle}"/>
@@ -110,7 +113,11 @@
                 Text="Öppna ärenden"
                 Style="{StaticResource SectionTitleStyle}"/>
 
-            <Grid Grid.Row="1" ColumnSpacing="16" Margin="12,0,12,0">
+            <Grid
+                Grid.Row="1"
+                ColumnSpacing="16"
+                Margin="12,0,12,0">
+
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="*"/>
@@ -128,64 +135,66 @@
                 <TextBlock Grid.Column="5" Text="Kund-ID" FontWeight="SemiBold"/>
             </Grid>
 
-                <ListView
+            <!-- Välj ett ärende innan du klickar på Hantera ärenden -->
+            <ListView
                 Grid.Row="2"
                 ItemsSource="{x:Bind ViewModel.OpenTickets, Mode=OneWay}"
-                SelectionMode="None"
-                IsItemClickEnabled="True"
-                ItemClick="OpenTickets_ItemClick">
+                SelectedItem="{x:Bind ViewModel.SelectedTicket, Mode=TwoWay}"
+                SelectionMode="Single"
+                IsItemClickEnabled="False">
 
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment"
-                                Value="Stretch"/>
+                        <Setter
+                            Property="HorizontalContentAlignment"
+                            Value="Stretch"/>
                     </Style>
                 </ListView.ItemContainerStyle>
 
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="viewmodels:TicketOverviewItemViewModel">
-                            <Grid ColumnSpacing="16">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                </Grid.ColumnDefinitions>
+                    <DataTemplate
+                        x:DataType="viewmodels:TicketOverviewItemViewModel">
 
-                                <TextBlock
-                                    Text="{x:Bind Title}"
-                                    TextTrimming="CharacterEllipsis"/>
+                        <Grid ColumnSpacing="16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
 
-                                <TextBlock
-                                    Grid.Column="1"
-                                    Text="{x:Bind Status}"/>
+                            <TextBlock
+                                Text="{x:Bind Title}"
+                                TextTrimming="CharacterEllipsis"/>
 
-                                <TextBlock
-                                    Grid.Column="2"
-                                    Text="{x:Bind Priority}"/>
+                            <TextBlock
+                                Grid.Column="1"
+                                Text="{x:Bind Status}"/>
 
-                                <TextBlock
-                                    Grid.Column="3"
-                                    Text="{x:Bind CustomerName}"
-                                    TextWrapping="Wrap"/>
-                                
-                                <TextBlock
-                                    Grid.Column="4"
-                                    Text="{x:Bind Id}"
-                                    TextWrapping="Wrap"
-                                    IsTextSelectionEnabled="True"/>
+                            <TextBlock
+                                Grid.Column="2"
+                                Text="{x:Bind Priority}"/>
 
-                                <TextBlock
-                                    Grid.Column="5"
-                                    Text="{x:Bind CustomerId}"
-                                    TextWrapping="Wrap"
-                                    IsTextSelectionEnabled="True"/>
+                            <TextBlock
+                                Grid.Column="3"
+                                Text="{x:Bind CustomerName}"
+                                TextWrapping="Wrap"/>
 
+                            <TextBlock
+                                Grid.Column="4"
+                                Text="{x:Bind Id}"
+                                TextWrapping="Wrap"
+                                IsTextSelectionEnabled="True"/>
 
-                            </Grid>
-                        </DataTemplate>
+                            <TextBlock
+                                Grid.Column="5"
+                                Text="{x:Bind CustomerId}"
+                                TextWrapping="Wrap"
+                                IsTextSelectionEnabled="True"/>
+                        </Grid>
+                    </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
