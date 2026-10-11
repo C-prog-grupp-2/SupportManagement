@@ -55,8 +55,6 @@ public partial class TicketDetailsViewModel : ObservableObject
         {
             Ticket = await _ticketService.GetTicketAsync(_ticketId);
 
-            Ticket = await _ticketService.GetTicketAsync(_ticketId);
-
             if (Ticket is null)
             {
                 StatusMessage = "Ärendet hittades inte.";

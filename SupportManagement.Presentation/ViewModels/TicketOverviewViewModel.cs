@@ -7,6 +7,7 @@ using SupportManagement.Presentation.Navigation;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Linq;
+using System;
 
 namespace SupportManagement.Presentation.ViewModels;
 
@@ -27,33 +28,48 @@ public partial class TicketOverviewViewModel : ObservableObject
 
     public async Task LoadTicketsAsync()
     {
-        var tickets = await _ticketService.GetAllTicketsAsync();
-        var customers = await _customerService.GetAllAsync();
+        IsLoading = true;
+        StatusMessage = string.Empty;
 
-        OpenTickets.Clear();
-
-        foreach (var ticket in tickets)
+        try
         {
-            if (ticket.Status == TicketStatus.Resolved)
+            var tickets = await _ticketService.GetAllTicketsAsync();
+            var customers = await _customerService.GetAllAsync();
+
+            OpenTickets.Clear();
+
+            foreach (var ticket in tickets)
             {
-                continue;
+                if (ticket.Status == TicketStatus.Resolved)
+                {
+                    continue;
+                }
+
+                var customer = customers.FirstOrDefault(
+                    customer => customer.Id == ticket.CustomerId);
+
+                OpenTickets.Add(new TicketOverviewItemViewModel(
+                    ticket,
+                    customer?.Name ?? "Okänd kund"));
             }
 
-            var customer = customers.FirstOrDefault(
-                customer => customer.Id == ticket.CustomerId);
+            OpenTicketCount = OpenTickets.Count;
 
-            OpenTickets.Add(new TicketOverviewItemViewModel(
-                ticket,
-                customer?.Name ?? "Okänd kund"));
+            NewTicketCount = OpenTickets.Count(
+                ticket => ticket.Status == TicketStatus.New);
+
+            HighPriorityTicketCount = OpenTickets.Count(
+                ticket => ticket.Priority == TicketPriority.High);
         }
-
-        OpenTicketCount = OpenTickets.Count;
-
-        NewTicketCount = OpenTickets.Count(
-            ticket => ticket.Status == TicketStatus.New);
-
-        HighPriorityTicketCount = OpenTickets.Count(
-            ticket => ticket.Priority == TicketPriority.High);
+        catch (Exception)
+        {
+            StatusMessage =
+                "Ärendeöversikten kunde inte hämtas. Försök igen.";
+        }
+        finally
+        {
+            IsLoading = false;
+        }
     }
 
     [ObservableProperty]
@@ -64,6 +80,13 @@ public partial class TicketOverviewViewModel : ObservableObject
 
     [ObservableProperty]
     public partial int HighPriorityTicketCount { get; set; }
+    
+    [ObservableProperty]
+    public partial string StatusMessage { get; private set; }
+    = string.Empty;
+
+    [ObservableProperty]
+    public partial bool IsLoading { get; private set; }
 
     [RelayCommand]
     private void NavigateToTicketRegistration()
