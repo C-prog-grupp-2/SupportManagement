@@ -28,6 +28,17 @@
                     Text="Överblick över öppna supportärenden"
                     Style="{StaticResource BodyTextStyle}"
                     TextWrapping="WrapWholeWords"/>
+
+                <ProgressRing
+                    IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+                    HorizontalAlignment="Left"
+                    Width="24"
+                    Height="24"/>
+
+                <TextBlock
+                    Text="{x:Bind ViewModel.StatusMessage, Mode=OneWay}"
+                    Foreground="IndianRed"
+                    TextWrapping="Wrap"/>
             </StackPanel>
 
             <StackPanel
