@@ -19,10 +19,13 @@
     <None Remove="Styles\Buttons.xaml" />
     <None Remove="Styles\Typography.xaml" />
     <None Remove="Views\CreateCustomerPage.xaml" />
+    <None Remove="Views\CreateTicketPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\CustomersPage.xaml" />
 	<None Remove="Views\EditCustomerPage.xaml" />
+	<None Remove="Views\HomePage.xaml" />
+	<None Remove="Views\TicketDetailsPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -62,6 +65,21 @@
     
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Views\TicketDetailsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\CreateTicketPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Views\EditCustomerPage.xaml">
 	  <Generator>MSBuild:Compile</Generator>
 	  </Page>
@@ -75,12 +93,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Styles\Typography.xaml">
+    <Page Update="Styles\Buttons.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Styles\Buttons.xaml">
+    <Page Update="Views\TicketOverviewPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

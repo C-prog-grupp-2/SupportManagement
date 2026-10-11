@@ -42,14 +42,20 @@ public partial class App : Microsoft.UI.Xaml.Application
         services.AddSingleton<EditCustomerViewModel>();
         services.AddTransient<EditCustomerPage>();
 
-        //services.AddTransient<TicketOverviewViewModel>();
-        //services.AddTransient<TicketOverviewPage>();
+        services.AddTransient<TicketOverviewViewModel>();
+        services.AddTransient<TicketOverviewPage>();
 
-        //services.AddTransient<CreateTicketViewModel>();
-        //services.AddTransient<CreateTicketPage>();
+        services.AddTransient<TicketDetailsViewModel>();
+        services.AddTransient<TicketDetailsPage>();
+
+        services.AddTransient<CreateTicketViewModel>();
+        services.AddTransient<CreateTicketPage>();
 
         //services.AddTransient<ManageTicketViewModel>();
         //services.AddTransient<ManageTicketPage>();
+
+        services.AddTransient<HomeViewModel>();
+        services.AddTransient<HomePage>();
 
         _serviceProvider = services.BuildServiceProvider();
     }
