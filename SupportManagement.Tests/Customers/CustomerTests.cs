@@ -16,8 +16,23 @@ public class CustomerTests
         //Act - Skapa en kund
         var customer = new Customer(name, email);
 
-        //Assert - kontrollera att namnet blev rätt
-        Assert.Equal("Anna", customer.Name);
+        //Assert - kontrollera att namnet sparades rätt.
+        Assert.Equal(name, customer.Name);
+
+    }
+
+    [Fact]
+    public void Constructor_ValidEmail_SetsCustomerEmail()
+    {
+        //Arrange 
+        string name = "Anna";
+        string email = "anna@test.se";
+
+        //Act
+        var customer = new Customer(name, email);
+
+        //Assert - kontrollera att eposten sparas korrekt.
+        Assert.Equal(email, customer.Email);
 
     }
 
