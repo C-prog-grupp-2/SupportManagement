@@ -16,26 +16,9 @@ public interface ITicketService
 
     Task<List<Ticket>> GetAllTicketsAsync();
 
-    Task AssignTechnicianAsync(
-       Guid ticketId,
-       string technician);
-
-    Task ChangePriorityAsync(
-        Guid ticketId,
-        TicketPriority priority);
-
-    Task ChangeStatusAsync(
-        Guid ticketId,
-        TicketStatus status);
-
     Task AddCommentAsync(
         Guid ticketId,
         string commentText);
-
-    Task UpdateDetailsAsync(
-        Guid ticketId,
-        string title,
-        string description);
 
     Task UpdateTicketAsync(
         Guid ticketId,
