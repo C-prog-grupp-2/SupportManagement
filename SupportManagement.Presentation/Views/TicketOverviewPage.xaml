@@ -3,7 +3,7 @@
     x:Class="SupportManagement.Presentation.Views.TicketOverviewPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:models="using:SupportManagement.Domain.Models">
+    xmlns:viewmodels="using:SupportManagement.Presentation.ViewModels">
 
     <Grid Padding="24" RowSpacing="32">
         <Grid.RowDefinitions>
@@ -104,18 +104,20 @@
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Text="Rubrik" FontWeight="SemiBold"/>
-                <TextBlock Grid.Column="1"
-                           Text="Status"
-                           FontWeight="SemiBold"/>
-                <TextBlock Grid.Column="2"
-                           Text="Prioritet"
-                           FontWeight="SemiBold"/>
+                <TextBlock Grid.Column="1" Text="Status" FontWeight="SemiBold"/>
+                <TextBlock Grid.Column="2" Text="Prioritet" FontWeight="SemiBold"/>
+                <TextBlock Grid.Column="3" Text="Kund" FontWeight="SemiBold"/>
+                <TextBlock Grid.Column="4" Text="Ärende-ID" FontWeight="SemiBold"/>
+                <TextBlock Grid.Column="5" Text="Kund-ID" FontWeight="SemiBold"/>
             </Grid>
 
-            <ListView
+                <ListView
                 Grid.Row="2"
                 ItemsSource="{x:Bind ViewModel.OpenTickets, Mode=OneWay}"
                 SelectionMode="None">
@@ -128,27 +130,49 @@
                 </ListView.ItemContainerStyle>
 
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Ticket">
-                        <Grid ColumnSpacing="16">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                    <DataTemplate x:DataType="viewmodels:TicketOverviewItemViewModel">
+                            <Grid ColumnSpacing="16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
 
-                            <TextBlock
-                                Text="{x:Bind Title}"
-                                TextTrimming="CharacterEllipsis"/>
+                                <TextBlock
+                                    Text="{x:Bind Title}"
+                                    TextTrimming="CharacterEllipsis"/>
 
-                            <TextBlock
-                                Grid.Column="1"
-                                Text="{x:Bind Status}"/>
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Text="{x:Bind Status}"/>
 
-                            <TextBlock
-                                Grid.Column="2"
-                                Text="{x:Bind Priority}"/>
-                        </Grid>
-                    </DataTemplate>
+                                <TextBlock
+                                    Grid.Column="2"
+                                    Text="{x:Bind Priority}"/>
+
+                                <TextBlock
+                                    Grid.Column="3"
+                                    Text="{x:Bind CustomerName}"
+                                    TextWrapping="Wrap"/>
+                                
+                                <TextBlock
+                                    Grid.Column="4"
+                                    Text="{x:Bind Id}"
+                                    TextWrapping="Wrap"
+                                    IsTextSelectionEnabled="True"/>
+
+                                <TextBlock
+                                    Grid.Column="5"
+                                    Text="{x:Bind CustomerId}"
+                                    TextWrapping="Wrap"
+                                    IsTextSelectionEnabled="True"/>
+
+
+                            </Grid>
+                        </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>

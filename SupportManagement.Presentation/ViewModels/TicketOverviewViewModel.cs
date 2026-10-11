@@ -14,34 +14,46 @@ public partial class TicketOverviewViewModel : ObservableObject
 {
     private readonly ITicketService _ticketService;
     private readonly INavigationService _navigationService;
+    private readonly ICustomerService _customerService;
 
-    public TicketOverviewViewModel(ITicketService ticketService, INavigationService navigationService)
+    public TicketOverviewViewModel(ITicketService ticketService, ICustomerService customerService, INavigationService navigationService)
     {
         _ticketService = ticketService;
+        _customerService = customerService;
         _navigationService = navigationService;
     }
 
-    public ObservableCollection<Ticket> OpenTickets { get; } = [];
+    public ObservableCollection<TicketOverviewItemViewModel>OpenTickets { get; } = [];
 
     public async Task LoadTicketsAsync()
     {
         var tickets = await _ticketService.GetAllTicketsAsync();
+        var customers = await _customerService.GetAllAsync();
 
         OpenTickets.Clear();
 
         foreach (var ticket in tickets)
         {
-            if (ticket.Status != TicketStatus.Resolved)
+            if (ticket.Status == TicketStatus.Resolved)
             {
-                OpenTickets.Add(ticket);
+                continue;
             }
+
+            var customer = customers.FirstOrDefault(
+                customer => customer.Id == ticket.CustomerId);
+
+            OpenTickets.Add(new TicketOverviewItemViewModel(
+                ticket,
+                customer?.Name ?? "Okänd kund"));
         }
 
         OpenTicketCount = OpenTickets.Count;
-        
-        NewTicketCount = OpenTickets.Count(ticket => ticket.Status == TicketStatus.New);
 
-        HighPriorityTicketCount = OpenTickets.Count(ticket => ticket.Priority == TicketPriority.High);
+        NewTicketCount = OpenTickets.Count(
+            ticket => ticket.Status == TicketStatus.New);
+
+        HighPriorityTicketCount = OpenTickets.Count(
+            ticket => ticket.Priority == TicketPriority.High);
     }
 
     [ObservableProperty]

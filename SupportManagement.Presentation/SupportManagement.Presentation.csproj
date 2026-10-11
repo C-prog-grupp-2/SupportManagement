@@ -19,10 +19,12 @@
     <None Remove="Styles\Buttons.xaml" />
     <None Remove="Styles\Typography.xaml" />
     <None Remove="Views\CreateCustomerPage.xaml" />
+    <None Remove="Views\CreateTicketPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\CustomersPage.xaml" />
 	<None Remove="Views\EditCustomerPage.xaml" />
+	<None Remove="Views\HomePage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,6 +62,16 @@
   <ItemGroup>
     <Folder Include="Styles\" />
     
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\CreateTicketPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\EditCustomerPage.xaml">
