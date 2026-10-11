@@ -8,9 +8,25 @@
     <ScrollViewer>
         <StackPanel Padding="24" Spacing="24">
 
-            <TextBlock
-                Text="Ärendedetaljer"
-                Style="{StaticResource PageTitleStyle}"/>
+            <Grid ColumnSpacing="16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    Text="Ärendedetaljer"
+                    Style="{StaticResource PageTitleStyle}"
+                    VerticalAlignment="Center"/>
+
+                <Button
+                    Grid.Column="1"
+                    Content="Hantera ärende"
+                    Width="150"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    VerticalAlignment="Center"
+                    Command="{x:Bind ViewModel.OpenManageTicketCommand}"/>
+            </Grid>
 
             <ProgressRing
                 IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"

@@ -166,4 +166,35 @@ public class TicketService(
         // Sparar hela listan.
         await ticketRepository.SaveAllAsync(tickets);
     }
+
+    public async Task UpdateTicketAsync(
+        Guid ticketId,
+        string title,
+        string description,
+        TicketPriority priority,
+        string? technician,
+        TicketStatus status)
+    {
+        var tickets = await ticketRepository.GetAllAsync();
+
+        var ticket = tickets.FirstOrDefault(
+            ticket => ticket.Id == ticketId);
+
+        if (ticket is null)
+        {
+            throw new InvalidOperationException("Ärendet hittades inte.");
+        }
+
+        ticket.UpdateDetails(title, description);
+        ticket.ChangePriority(priority);
+
+        if (!string.IsNullOrWhiteSpace(technician))
+        {
+            ticket.AssignTechnician(technician);
+        }
+
+        ticket.ChangeStatus(status);
+
+        await ticketRepository.SaveAllAsync(tickets);
+    }
 }

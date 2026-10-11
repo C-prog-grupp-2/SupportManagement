@@ -105,9 +105,4 @@ public partial class TicketDetailsViewModel : ObservableObject
 
         await _navigationService.NavigateToManageTicketAsync(ticket.Id);
     }
-
-    public void OpenTicketDetails(Guid ticketId)
-    {
-        _navigationService.NavigateToTicketDetails(ticketId);
-    }
 }

@@ -31,14 +31,6 @@ public partial class TicketOverviewViewModel : ObservableObject
     public ObservableCollection<TicketOverviewItemViewModel> OpenTickets
     { get; } = [];
 
-    // Håller reda på vilket ärende användaren väljer i listan.
-    [ObservableProperty]
-    public partial TicketOverviewItemViewModel? SelectedTicket
-    {
-        get;
-        set;
-    }
-
     public async Task LoadTicketsAsync()
     {
         IsLoading = true;
@@ -105,20 +97,6 @@ public partial class TicketOverviewViewModel : ObservableObject
     private void NavigateToTicketRegistration()
     {
         _navigationService.Navigate(AppPage.CreateTicket);
-    }
-
-    // Öppnar det ärende som användaren har valt.
-    [RelayCommand]
-    private async Task NavigateToTicketManagementAsync()
-    {
-        if (SelectedTicket is null)
-        {
-            StatusMessage = "Välj ett ärende i listan först.";
-            return;
-        }
-
-        await _navigationService.NavigateToManageTicketAsync(
-            SelectedTicket.Id);
     }
 
     // Behåller den befintliga navigeringen till detaljsidan.

@@ -120,30 +120,14 @@ public partial class ManageTicketViewModel(
         try
         {
             var ticketId = Ticket.Id;
-            var technician = SelectedTechnician;
 
-            // Spara rubrik och beskrivning.
-            await _ticketService.UpdateDetailsAsync(
+            // Validera och spara alla ändringar tillsammans.
+            await _ticketService.UpdateTicketAsync(
                 ticketId,
                 Ticket.Title,
-                Ticket.Description);
-
-            // Spara prioritet.
-            await _ticketService.ChangePriorityAsync(
-                ticketId,
-                SelectedPriority);
-
-            // Tilldela tekniker om en är vald.
-            if (!string.IsNullOrWhiteSpace(technician))
-            {
-                await _ticketService.AssignTechnicianAsync(
-                    ticketId,
-                    technician);
-            }
-
-            // Spara status.
-            await _ticketService.ChangeStatusAsync(
-                ticketId,
+                Ticket.Description,
+                SelectedPriority,
+                SelectedTechnician,
                 SelectedStatus);
 
             // Hämta de uppdaterade uppgifterna.

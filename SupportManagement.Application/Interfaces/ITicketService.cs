@@ -36,4 +36,12 @@ public interface ITicketService
         Guid ticketId,
         string title,
         string description);
+
+    Task UpdateTicketAsync(
+        Guid ticketId,
+        string title,
+        string description,
+        TicketPriority priority,
+        string? technician,
+        TicketStatus status);
 }

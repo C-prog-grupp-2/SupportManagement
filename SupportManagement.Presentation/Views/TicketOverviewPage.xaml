@@ -52,12 +52,6 @@
                     Width="140"
                     Style="{StaticResource PrimaryButtonStyle}"
                     Command="{x:Bind ViewModel.NavigateToTicketRegistrationCommand}"/>
-
-                <Button
-                    Content="Hantera ärenden"
-                    Width="160"
-                    Style="{StaticResource SecondaryButtonStyle}"
-                    Command="{x:Bind ViewModel.NavigateToTicketManagementCommand}"/>
             </StackPanel>
         </Grid>
 
@@ -135,13 +129,13 @@
                 <TextBlock Grid.Column="5" Text="Kund-ID" FontWeight="SemiBold"/>
             </Grid>
 
-            <!-- Välj ett ärende innan du klickar på Hantera ärenden -->
+            <!-- Klicka på ett ärende för att se dess detaljer -->
             <ListView
                 Grid.Row="2"
                 ItemsSource="{x:Bind ViewModel.OpenTickets, Mode=OneWay}"
-                SelectedItem="{x:Bind ViewModel.SelectedTicket, Mode=TwoWay}"
-                SelectionMode="Single"
-                IsItemClickEnabled="False">
+                SelectionMode="None"
+                IsItemClickEnabled="True"
+                ItemClick="OpenTickets_ItemClick">
 
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
