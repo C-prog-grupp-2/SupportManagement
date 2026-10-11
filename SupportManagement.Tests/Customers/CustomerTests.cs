@@ -1,7 +1,6 @@
-﻿namespace SupportManagement.Tests.Customers;
-
-using SupportManagement.Domain.Models;
+﻿using SupportManagement.Domain.Models;
 using Xunit;
+namespace SupportManagement.Tests.Customers;
 
 public class CustomerTests
 {

@@ -1,9 +1,9 @@
-﻿namespace SupportManagement.Tests.Customers;
-using NSubstitute;
+﻿using NSubstitute;
 using SupportManagement.Application.Interfaces;
 using SupportManagement.Application.Services;
 using SupportManagement.Domain.Models;
 using Xunit;
+namespace SupportManagement.Tests.Customers;
 
 public class CustomerServiceTest
 {
@@ -25,9 +25,9 @@ public class CustomerServiceTest
         await service.CreateAsync(name, email);
 
         //Assert - Kontrollera att SaveAllAsync anropats exakt 1 gång.
-        // och att kundlistan innehåller rätt namn & e-post
+        // och att kundlistan innehåller exakt en kund med rätt namn & e-post
         await customerRepository.Received(1).SaveAllAsync(
             Arg.Is<IEnumerable<Customer>>(customers =>
-            customers.Any(customer => customer.Name == name && customer.Email == email)));
+            customers.Count()==1 && customers.Any(customer => customer.Name == name && customer.Email == email)));
     }
 }

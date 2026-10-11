@@ -1,6 +1,5 @@
 ﻿using SupportManagement.Domain.Models;
 using SupportManagement.Infrastructure.Repositories;
-
 namespace SupportManagement.Tests.Customers;
 
 public class JsonCustomerRepositoryTests
