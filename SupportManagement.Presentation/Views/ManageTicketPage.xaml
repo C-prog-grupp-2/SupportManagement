@@ -7,9 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <!--<Page.Background>
-        <SolidColorBrush Color="#2F2F2F"/>
-    </Page.Background>-->
     <ScrollViewer>
         <Grid Margin="30">
 
