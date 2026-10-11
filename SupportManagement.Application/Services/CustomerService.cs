@@ -49,7 +49,7 @@ public class CustomerService (ICustomerRepository customerRepository, ITicketRep
 
         if (hasTickets)
         {
-            throw new InvalidOperationException("Kunden kan inte tas bort eftersom det finns kopplade ärenden.");
+            throw new InvalidOperationException("Kunden kan inte tas bort eftersom det finns ärenden kopplade till kunden");
         }
         
         var customers = await customerRepository.GetAllAsync();
