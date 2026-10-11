@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="SupportManagement.Presentation.Views.CreateTicketPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ScrollViewer>
+        <StackPanel Padding="24" Spacing="24">
+
+            <StackPanel Spacing="6">
+                <TextBlock
+                    Text="Registrera ärende"
+                    Style="{StaticResource PageTitleStyle}"/>
+
+                <TextBlock
+                    Text="Beskriv problemet och välj kund och prioritet"
+                    Style="{StaticResource BodyTextStyle}"
+                    TextWrapping="WrapWholeWords"/>
+            </StackPanel>
+
+            <StackPanel
+                Spacing="16"
+                MaxWidth="600"
+                HorizontalAlignment="Stretch">
+
+                <TextBox
+                    Header="Rubrik"
+                    Text="{x:Bind ViewModel.Title, Mode=TwoWay,
+                           UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBox
+                    Header="Beskrivning"
+                    MinHeight="140"
+                    AcceptsReturn="True"
+                    TextWrapping="Wrap"
+                    Text="{x:Bind ViewModel.Description, Mode=TwoWay,
+                           UpdateSourceTrigger=PropertyChanged}"/>
+
+                <ComboBox
+                    Header="Kund"
+                    PlaceholderText="Välj en kund"
+                    HorizontalAlignment="Stretch"
+                    DisplayMemberPath="Name"
+                    ItemsSource="{x:Bind ViewModel.Customers, Mode=OneWay}"
+                    SelectedItem="{x:Bind ViewModel.SelectedCustomer, Mode=TwoWay}"/>
+
+                <ComboBox
+                    Header="Prioritet"
+                    HorizontalAlignment="Stretch"
+                    ItemsSource="{x:Bind ViewModel.Priorities}"
+                    SelectedItem="{x:Bind ViewModel.SelectedPriority, Mode=TwoWay}"/>
+
+                <TextBlock
+                    Text="{x:Bind ViewModel.StatusMessage, Mode=OneWay}"
+                    Foreground="IndianRed"
+                    TextWrapping="WrapWholeWords"/>
+
+                <StackPanel
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Spacing="12">
+
+                    <Button
+                        Content="Tillbaka"
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        Command="{x:Bind ViewModel.GoBackCommand}"/>
+
+                    <Button
+                        Content="Registrera"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Command="{x:Bind ViewModel.RegisterTicketCommand}"/>
+                </StackPanel>
+
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
