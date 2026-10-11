@@ -30,7 +30,7 @@
         <!-- RUBRIK -->
         <TextBlock
             Grid.Row="0"
-            Text="TicketDetails"
+            Text="Ärende hantering"
             Style="{StaticResource PageTitleStyle}"
             Margin="0,0,0,25"/>
 
