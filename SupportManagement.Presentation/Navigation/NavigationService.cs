@@ -25,4 +25,13 @@ public partial class NavigationService(IServiceProvider services) : ObservableOb
             _ => throw new ArgumentOutOfRangeException(nameof(page))
         };
     }
+
+    public void NavigateToTicketDetails(Guid ticketId)
+    {
+        var page = services.GetRequiredService<TicketDetailsPage>();
+
+        page.ViewModel.Initialize(ticketId);
+
+        CurrentPage = page;
+    }
 }

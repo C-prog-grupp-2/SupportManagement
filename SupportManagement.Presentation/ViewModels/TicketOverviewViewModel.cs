@@ -76,5 +76,11 @@ public partial class TicketOverviewViewModel : ObservableObject
     {
         _navigationService.Navigate(AppPage.ManageTicket);
     }
+
+    [RelayCommand]
+    private void OpenTicketDetails(System.Guid ticketId)
+    {
+        _navigationService.NavigateToTicketDetails(ticketId);
+    }
 }
 

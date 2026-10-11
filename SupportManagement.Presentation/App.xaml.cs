@@ -45,6 +45,9 @@ public partial class App : Microsoft.UI.Xaml.Application
         services.AddTransient<TicketOverviewViewModel>();
         services.AddTransient<TicketOverviewPage>();
 
+        services.AddTransient<TicketDetailsViewModel>();
+        services.AddTransient<TicketDetailsPage>();
+
         services.AddTransient<CreateTicketViewModel>();
         services.AddTransient<CreateTicketPage>();
 

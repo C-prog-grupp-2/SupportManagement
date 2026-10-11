@@ -120,7 +120,9 @@
                 <ListView
                 Grid.Row="2"
                 ItemsSource="{x:Bind ViewModel.OpenTickets, Mode=OneWay}"
-                SelectionMode="None">
+                SelectionMode="None"
+                IsItemClickEnabled="True"
+                ItemClick="OpenTickets_ItemClick">
 
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">

@@ -31,5 +31,15 @@ public sealed partial class TicketOverviewPage : Page
     {
         await ViewModel.LoadTicketsAsync();
     }
+
+    private void OpenTickets_ItemClick(
+    object sender,
+    ItemClickEventArgs e)
+    {
+        if (e.ClickedItem is TicketOverviewItemViewModel ticket)
+        {
+            ViewModel.OpenTicketDetailsCommand.Execute(ticket.Id);
+        }
+    }
 }
 
