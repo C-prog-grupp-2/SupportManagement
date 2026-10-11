@@ -7,7 +7,19 @@ namespace SupportManagement.Infrastructure.Repositories;
 
 public class JsonCustomerRepository : ICustomerRepository
 {
-    private readonly string _filePath = DataPath.CustomerFilePath; //Sökvägen till filen där kunderna sparas
+
+    private readonly string _filePath; //Sökvägen till filen där kunderna sparas
+
+    //Används av vanliga applikationen
+    public JsonCustomerRepository(): this(DataPath.CustomerFilePath)
+    {
+
+    }
+    //Används av tester som behöver en egen JSON-Customerfil
+    public JsonCustomerRepository(string filePath)
+    {
+        _filePath = filePath;
+    }
 
     private readonly JsonSerializerOptions _options = new() 
     {
