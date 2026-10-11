@@ -11,5 +11,6 @@ public enum AppPage
     EditCustomer,
     TicketOverview,
     CreateTicket,
-    ManageTicket
+    ManageTicket,
+    Home
 }

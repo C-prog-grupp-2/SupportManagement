@@ -18,10 +18,23 @@ public partial class NavigationService(IServiceProvider services) : ObservableOb
             AppPage.Customers => services.GetRequiredService<CustomersPage>(),
             AppPage.CreateCustomers => services.GetRequiredService<CreateCustomerPage>(),
             AppPage.EditCustomer => services.GetRequiredService<EditCustomerPage>(),
+            AppPage.TicketOverview => services.GetRequiredService<TicketOverviewPage>(),
+            AppPage.CreateTicket => services.GetRequiredService<CreateTicketPage>(),
+            //AppPage.ManageTicket => services.GetRequiredService<ManageTicketPage>(),
+            AppPage.Home => services.GetRequiredService<HomePage>(),
             //AppPage.TicketOverview => services.GetRequiredService<TicketOverviewPage>(),
             //AppPage.CreateTicket => services.GetRequiredService<CreateTicketPage>(),
             AppPage.ManageTicket => services.GetRequiredService<ManageTicketPage>(),
             _ => throw new ArgumentOutOfRangeException(nameof(page))
         };
+    }
+
+    public void NavigateToTicketDetails(Guid ticketId)
+    {
+        var page = services.GetRequiredService<TicketDetailsPage>();
+
+        page.ViewModel.Initialize(ticketId);
+
+        CurrentPage = page;
     }
 }

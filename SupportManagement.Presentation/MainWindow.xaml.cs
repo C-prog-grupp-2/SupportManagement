@@ -26,7 +26,7 @@ public sealed partial class MainWindow : Window
 
         InitializeComponent();
 
-
+        ViewModel.Navigation.Navigate(AppPage.Home);
     }
     private void NavView_SelectionChanged(
     NavigationView sender,
