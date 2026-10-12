@@ -7,7 +7,7 @@ public class Comment
     [JsonInclude]
     public Guid CommentId { get; private set; } = Guid.NewGuid();
     public string CommentContent { get; set; } = string.Empty;
-    public DateTime CommentCreatedAtUtc { get; set; } = DateTime.UtcNow;
+    public DateTime CommentCreatedAtUtc { get; private set; } = DateTime.UtcNow;
 
     [JsonIgnore]
     public string CreatedAtLocal =>
