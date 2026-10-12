@@ -73,8 +73,8 @@
                 </StackPanel>
 
                 <StackPanel Spacing="6">
-                    <TextBlock Text="Skapad (UTC)" FontWeight="SemiBold"/>
-                    <TextBlock Text="{Binding CreatedAtUtc}"/>
+                    <TextBlock Text="Skapad" FontWeight="SemiBold"/>
+                    <TextBlock Text="{x:Bind ViewModel.CreatedAtLocal, Mode=OneWay}"/>
                 </StackPanel>
 
                 <StackPanel Spacing="6">
@@ -112,7 +112,7 @@
                                     Text="{x:Bind CommentContent}"
                                     TextWrapping="Wrap"/>
                                 <TextBlock
-                                    Text="{x:Bind CommentCreatedAtUtc}"
+                                    Text="{x:Bind CreatedAtLocal}"
                                     Opacity="0.7"/>
                             </StackPanel>
                         </DataTemplate>

@@ -22,6 +22,9 @@ public partial class TicketDetailsViewModel : ObservableObject
             : Ticket.Comments.Count == 0
                 ? "Inga kommentarer har lagts till"
                 : "Kommentarer";
+    public string CreatedAtLocal =>
+    Ticket?.CreatedAtUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm")
+    ?? string.Empty;
 
     public TicketDetailsViewModel(
         ITicketService ticketService,
@@ -35,6 +38,7 @@ public partial class TicketDetailsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CommentsHeading))]
+    [NotifyPropertyChangedFor(nameof(CreatedAtLocal))]
     public partial Ticket? Ticket { get; private set; }
 
     [ObservableProperty]

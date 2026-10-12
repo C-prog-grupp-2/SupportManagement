@@ -225,7 +225,7 @@
 
                                     <!-- Datum och tid -->
                                     <TextBlock
-                                    Text="{x:Bind CommentCreatedAtUtc}"
+                                    Text="{x:Bind CreatedAtLocal}"
                                     FontSize="12"
                                     Opacity="0.7"/>
 
