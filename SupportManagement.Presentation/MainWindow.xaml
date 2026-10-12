@@ -7,7 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="SupportManagement.Presentation">
+    Title="Ärendehantering">
     <Window.SystemBackdrop>
         <MicaBackdrop />
     </Window.SystemBackdrop>
@@ -16,6 +16,7 @@
         <NavigationView
     x:Name="NavView"
     PaneDisplayMode="Left"
+    OpenPaneLength="180"
     IsSettingsVisible="False"
     IsBackButtonVisible="Collapsed"
     SelectionChanged="NavView_SelectionChanged">
