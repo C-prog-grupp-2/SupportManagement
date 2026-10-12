@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using SupportManagement.Application.Interfaces;
+using SupportManagement.Presentation.Views;
 
 namespace SupportManagement.Presentation;
 
@@ -51,8 +52,8 @@ public partial class App : Microsoft.UI.Xaml.Application
         services.AddTransient<CreateTicketViewModel>();
         services.AddTransient<CreateTicketPage>();
 
-        //services.AddTransient<ManageTicketViewModel>();
-        //services.AddTransient<ManageTicketPage>();
+        services.AddTransient<ManageTicketViewModel>();
+        services.AddTransient<ManageTicketPage>();
 
         services.AddTransient<HomeViewModel>();
         services.AddTransient<HomePage>();

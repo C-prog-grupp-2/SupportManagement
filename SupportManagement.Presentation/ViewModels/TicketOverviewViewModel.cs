@@ -1,13 +1,14 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SupportManagement.Application.Interfaces;
 using SupportManagement.Domain.Enums;
 using SupportManagement.Domain.Models;
 using SupportManagement.Presentation.Navigation;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using System.Linq;
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SupportManagement.Presentation.ViewModels;
 
@@ -17,14 +18,18 @@ public partial class TicketOverviewViewModel : ObservableObject
     private readonly INavigationService _navigationService;
     private readonly ICustomerService _customerService;
 
-    public TicketOverviewViewModel(ITicketService ticketService, ICustomerService customerService, INavigationService navigationService)
+    public TicketOverviewViewModel(
+        ITicketService ticketService,
+        ICustomerService customerService,
+        INavigationService navigationService)
     {
         _ticketService = ticketService;
         _customerService = customerService;
         _navigationService = navigationService;
     }
 
-    public ObservableCollection<TicketOverviewItemViewModel>OpenTickets { get; } = [];
+    public ObservableCollection<TicketOverviewItemViewModel> OpenTickets
+    { get; } = [];
 
     public async Task LoadTicketsAsync()
     {
@@ -80,10 +85,10 @@ public partial class TicketOverviewViewModel : ObservableObject
 
     [ObservableProperty]
     public partial int HighPriorityTicketCount { get; set; }
-    
+
     [ObservableProperty]
     public partial string StatusMessage { get; private set; }
-    = string.Empty;
+        = string.Empty;
 
     [ObservableProperty]
     public partial bool IsLoading { get; private set; }
@@ -94,16 +99,10 @@ public partial class TicketOverviewViewModel : ObservableObject
         _navigationService.Navigate(AppPage.CreateTicket);
     }
 
+    // Behåller den befintliga navigeringen till detaljsidan.
     [RelayCommand]
-    private void NavigateToTicketManagement()
-    {
-        _navigationService.Navigate(AppPage.ManageTicket);
-    }
-
-    [RelayCommand]
-    private void OpenTicketDetails(System.Guid ticketId)
+    private void OpenTicketDetails(Guid ticketId)
     {
         _navigationService.NavigateToTicketDetails(ticketId);
     }
 }
-

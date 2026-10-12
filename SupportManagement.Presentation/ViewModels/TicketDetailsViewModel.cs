@@ -16,9 +16,20 @@ public partial class TicketDetailsViewModel : ObservableObject
     private readonly ICustomerService _customerService;
     private Guid _ticketId;
 
-    public string CommentsHeading =>Ticket is null ? "Kommentarer" : Ticket.Comments.Count == 0 ? "Inga kommentarer har lagts till" : "Kommentarer";
+    public string CommentsHeading =>
+        Ticket is null
+            ? "Kommentarer"
+            : Ticket.Comments.Count == 0
+                ? "Inga kommentarer har lagts till"
+                : "Kommentarer";
+    public string CreatedAtLocal =>
+    Ticket?.CreatedAtUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm")
+    ?? string.Empty;
 
-    public TicketDetailsViewModel(ITicketService ticketService, ICustomerService customerService, INavigationService navigationService)
+    public TicketDetailsViewModel(
+        ITicketService ticketService,
+        ICustomerService customerService,
+        INavigationService navigationService)
     {
         _ticketService = ticketService;
         _customerService = customerService;
@@ -27,6 +38,7 @@ public partial class TicketDetailsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CommentsHeading))]
+    [NotifyPropertyChangedFor(nameof(CreatedAtLocal))]
     public partial Ticket? Ticket { get; private set; }
 
     [ObservableProperty]
@@ -63,7 +75,9 @@ public partial class TicketDetailsViewModel : ObservableObject
 
             var customers = await _customerService.GetAllAsync();
 
-            CustomerName = customers.FirstOrDefault(customer => customer.Id == Ticket.CustomerId)?.Name ?? "Okänd kund";
+            CustomerName = customers.FirstOrDefault(
+                customer => customer.Id == Ticket.CustomerId)?.Name
+                ?? "Okänd kund";
         }
         catch (Exception)
         {
@@ -81,8 +95,18 @@ public partial class TicketDetailsViewModel : ObservableObject
         _navigationService.Navigate(AppPage.TicketOverview);
     }
 
-    public void OpenTicketDetails(System.Guid ticketId)
+    // Öppnar ManageTicket för det ärende som visas här.
+    [RelayCommand]
+    private async Task OpenManageTicketAsync()
     {
-        _navigationService.NavigateToTicketDetails(ticketId);
+        var ticket = Ticket;
+
+        if (ticket is null)
+        {
+            StatusMessage = "Ärendet har inte laddats.";
+            return;
+        }
+
+        await _navigationService.NavigateToManageTicketAsync(ticket.Id);
     }
 }

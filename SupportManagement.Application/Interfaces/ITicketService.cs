@@ -16,24 +16,15 @@ public interface ITicketService
 
     Task<List<Ticket>> GetAllTicketsAsync();
 
-    Task AssignTechnicianAsync(
-       Guid ticketId,
-       string technician);
-
-    Task ChangePriorityAsync(
-        Guid ticketId,
-        TicketPriority priority);
-
-    Task ChangeStatusAsync(
-        Guid ticketId,
-        TicketStatus status);
-
     Task AddCommentAsync(
         Guid ticketId,
         string commentText);
 
-    Task UpdateDetailsAsync(
+    Task UpdateTicketAsync(
         Guid ticketId,
         string title,
-        string description);
+        string description,
+        TicketPriority priority,
+        string? technician,
+        TicketStatus status);
 }
