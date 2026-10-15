@@ -1,11 +1,10 @@
 ﻿using SupportManagement.Domain.Models;
 using SupportManagement.Domain.Enums;
 using SupportManagement.Infrastructure.Repositories;
-using System.Xml.Linq;
 
-namespace SupportManagement.Tests.Customers;
+namespace SupportManagement.Tests.IntegrationTests;
 
-public class JsonCustomerRepositoryTests
+public class JsonRepositoryTests
 {
     [Fact]
     public async Task SaveAndLoadAsync_Customer_PreservesData()
@@ -21,7 +20,7 @@ public class JsonCustomerRepositoryTests
         try
         {
             //ACT - spara kunden och läs tillbaka den.
-            
+
             var repository = new JsonCustomerRepository(filePath); //Skapa ett repository med testfilens sökväg
             await repository.SaveAllAsync([customer]);   //Spara kunden till JSON-filen
 
@@ -33,7 +32,7 @@ public class JsonCustomerRepositoryTests
             //ASSERT
             var savedCustomer = Assert.Single(customers); //kontrollerar att exakt en kund läses tillbaka.
 
-           // Kontrollera att kundens uppgifter är oförändrade
+            // Kontrollera att kundens uppgifter är oförändrade
             Assert.Equal(customer.Id, savedCustomer.Id);
             Assert.Equal(customer.Name, savedCustomer.Name);
             Assert.Equal(customer.Email, savedCustomer.Email);
@@ -92,4 +91,60 @@ public class JsonCustomerRepositoryTests
             }
         }
     }
+
+    [Fact]
+    public async Task SaveTicket_WithTechnicianStatusAndComment_ShouldPersist()
+    {
+        // Arrange: Skapa en unik sökväg till en tillfällig JSON-fil.
+        var filePath = Path.Combine(
+            Path.GetTempPath(),
+            Guid.NewGuid() + ".json");
+
+        try
+        {
+            // Skapa repository med testfilen.
+            var repository = new JsonTicketRepository(filePath);
+
+            // Skapa ett nytt ärende.
+            var ticket = new Ticket();
+
+            ticket.UpdateDetails("Datorproblem", "Datorn startar inte.");
+            ticket.CustomerId = Guid.NewGuid();
+            ticket.ChangePriority(TicketPriority.Normal);
+
+            // Tilldela tekniker, ändra status och lägg till kommentar.
+            ticket.AssignTechnician("Anna");
+            ticket.ChangeStatus(TicketStatus.InProgress);
+            ticket.AddComment("Ärendet undersöks.");
+
+            // Act: Spara ärendet i JSON-filen.
+            await repository.SaveAllAsync(new[] { ticket });
+
+            // Läs tillbaka ärendet med ett nytt repository.
+            var newRepository = new JsonTicketRepository(filePath);
+            var loadedTickets = await newRepository.GetAllAsync();
+
+            // Assert: Kontrollera att informationen finns kvar.
+            var loadedTicket = Assert.Single(loadedTickets);
+
+            Assert.Equal(ticket.Id, loadedTicket.Id);
+            Assert.Equal(ticket.CustomerId, loadedTicket.CustomerId);
+            Assert.Equal("Anna", loadedTicket.ResponsibleTechnician);
+            Assert.Equal(TicketStatus.InProgress, loadedTicket.Status);
+
+            var comment = Assert.Single(loadedTicket.Comments);
+            Assert.Equal("Ärendet undersöks.", comment.CommentContent);
+        }
+        finally
+        {
+            // Ta bort testfilen efter testet.
+            if (File.Exists(filePath))
+                File.Delete(filePath);
+        }
+        if (File.Exists(filePath + ".tmp"))
+        {
+            File.Delete(filePath + ".tmp");
+        }
+    }
 }
+

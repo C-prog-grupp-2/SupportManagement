@@ -1,7 +1,7 @@
 ﻿using SupportManagement.Infrastructure.Repositories;
 using System.Text.Json;
 
-namespace SupportManagement.Tests.TicketManagement
+namespace SupportManagement.Tests.IntegrationTests
 {
     public class InvalidJsonIntegrationTests
     {

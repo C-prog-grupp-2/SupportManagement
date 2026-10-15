@@ -6,7 +6,7 @@
     xmlns:models="using:SupportManagement.Domain.Models">
 
     <ScrollViewer>
-        <StackPanel Padding="24" Spacing="24">
+        <StackPanel Padding="24">
 
             <Grid ColumnSpacing="16">
                 <Grid.ColumnDefinitions>

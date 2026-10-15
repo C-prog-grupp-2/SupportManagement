@@ -4,7 +4,7 @@ using SupportManagement.Domain.Enums;
 using SupportManagement.Domain.Models;
 using Xunit;
 
-namespace SupportManagement.Tests.TicketManagement;
+namespace SupportManagement.Tests.Tickets;
 
 public class TicketStatusTests
 {
