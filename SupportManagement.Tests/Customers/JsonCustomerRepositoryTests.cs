@@ -1,5 +1,8 @@
 ﻿using SupportManagement.Domain.Models;
+using SupportManagement.Domain.Enums;
 using SupportManagement.Infrastructure.Repositories;
+using System.Xml.Linq;
+
 namespace SupportManagement.Tests.Customers;
 
 public class JsonCustomerRepositoryTests
@@ -42,6 +45,50 @@ public class JsonCustomerRepositoryTests
             if (File.Exists(filePath))
             {
                 File.Delete(filePath); //Tar bort den tillfälliga Json-filen
+            }
+            if (File.Exists(filePath + ".tmp"))
+            {
+                File.Delete(filePath + ".tmp");
+            }
+        }
+    }
+
+    [Fact]
+    public async Task SaveAndLoadAsync_Ticket_PreservesData()
+    {
+        string filePath = Path.Combine(
+            Path.GetTempPath(), $"{Guid.NewGuid()}.json");
+
+        var ticket = new Ticket("Test Ticket", "This is a test ticket.", Guid.NewGuid(), TicketPriority.Normal);
+
+        try
+        {
+            var repository = new JsonTicketRepository(filePath);
+            await repository.SaveAllAsync([ticket]);
+
+            var loadRepository = new JsonTicketRepository(filePath);
+            var tickets = await loadRepository.GetAllAsync();
+
+            var savedTicket = Assert.Single(tickets);
+
+            Assert.Equal(ticket.Id, savedTicket.Id);
+            Assert.Equal(ticket.Title, savedTicket.Title);
+            Assert.Equal(ticket.Description, savedTicket.Description);
+            Assert.Equal(ticket.CustomerId, savedTicket.CustomerId);
+            Assert.Equal(ticket.Priority, savedTicket.Priority);
+            Assert.Equal(ticket.Status, savedTicket.Status);
+            Assert.Equal(ticket.CreatedAtUtc, savedTicket.CreatedAtUtc);
+        }
+
+        finally
+        {
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+            if (File.Exists(filePath + ".tmp"))
+            {
+                File.Delete(filePath + ".tmp");
             }
         }
     }

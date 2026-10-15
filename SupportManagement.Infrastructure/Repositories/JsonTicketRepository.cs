@@ -7,7 +7,17 @@ namespace SupportManagement.Infrastructure.Repositories;
 
 public class JsonTicketRepository : ITicketRepository
 {
-    private readonly string _filePath = DataPath.TicketFilePath;
+    private readonly string _filePath;
+
+    public JsonTicketRepository(): this(DataPath.TicketFilePath)
+    {
+
+    }
+
+    public JsonTicketRepository(string filePath)
+    {
+        _filePath = filePath;
+    }
 
     private readonly JsonSerializerOptions _options = new()
     {
