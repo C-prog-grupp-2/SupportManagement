@@ -23,9 +23,20 @@ public class Ticket
 
     public List<Comment> Comments { get; set; } = [];
 
-    
     [JsonInclude]
     public string? ResponsibleTechnician { get; private set; }
+
+    public Ticket() { }
+
+    public Ticket(string title, string description, Guid customerId, TicketPriority priority)
+    {
+        if (customerId == Guid.Empty)
+            throw new ArgumentException("Ange en giltig kund.", nameof(customerId));
+
+        UpdateDetails(title, description);
+        ChangePriority(priority);
+        CustomerId = customerId;
+    }
 
     public void AssignTechnician(string technician)
     {
