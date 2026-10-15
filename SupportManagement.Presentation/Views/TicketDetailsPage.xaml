@@ -8,9 +8,25 @@
     <ScrollViewer>
         <StackPanel Padding="24" Spacing="24">
 
-            <TextBlock
-                Text="Ärendedetaljer"
-                Style="{StaticResource PageTitleStyle}"/>
+            <Grid ColumnSpacing="16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    Text="Ärendedetaljer"
+                    Style="{StaticResource PageTitleStyle}"
+                    VerticalAlignment="Center"/>
+
+                <Button
+                    Grid.Column="1"
+                    Content="Hantera ärende"
+                    Width="150"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    VerticalAlignment="Center"
+                    Command="{x:Bind ViewModel.OpenManageTicketCommand}"/>
+            </Grid>
 
             <ProgressRing
                 IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
@@ -57,8 +73,8 @@
                 </StackPanel>
 
                 <StackPanel Spacing="6">
-                    <TextBlock Text="Skapad (UTC)" FontWeight="SemiBold"/>
-                    <TextBlock Text="{Binding CreatedAtUtc}"/>
+                    <TextBlock Text="Skapad" FontWeight="SemiBold"/>
+                    <TextBlock Text="{x:Bind ViewModel.CreatedAtLocal, Mode=OneWay}"/>
                 </StackPanel>
 
                 <StackPanel Spacing="6">
@@ -96,7 +112,7 @@
                                     Text="{x:Bind CommentContent}"
                                     TextWrapping="Wrap"/>
                                 <TextBlock
-                                    Text="{x:Bind CommentCreatedAtUtc}"
+                                    Text="{x:Bind CreatedAtLocal}"
                                     Opacity="0.7"/>
                             </StackPanel>
                         </DataTemplate>

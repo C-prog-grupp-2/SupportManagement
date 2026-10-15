@@ -1,0 +1,287 @@
+<Page
+    xmlns:models="using:SupportManagement.Domain.Models"
+    x:Class="SupportManagement.Presentation.Views.ManageTicketPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ScrollViewer>
+        <Grid Margin="30">
+
+            <Grid.RowDefinitions>
+                <!-- Rubrik -->
+                <RowDefinition Height="Auto"/>
+
+                <!-- Information om ticket -->
+                <RowDefinition Height="Auto"/>
+
+                <!-- Kommentarer tar resten av utrymmet -->
+                <RowDefinition Height="Auto"/>
+
+                <!-- Knappar -->
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- RUBRIK -->
+            <TextBlock
+            Grid.Row="0"
+            Text="Ärendehantering"
+            Style="{StaticResource PageTitleStyle}"
+            Margin="0,0,0,25"/>
+
+            <!-- INFORMATION OM TICKET -->
+            <Grid
+            Grid.Row="1"
+            Margin="0,0,0,25">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Titel -->
+                <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="Titel:"
+                FontWeight="Bold"
+                Margin="0,0,15,10"/>
+
+                <TextBox
+                Grid.Row="0"
+                Grid.Column="1"
+                Text="{x:Bind ViewModel.Ticket.Title, Mode=TwoWay}"
+                Margin="0,0,0,10"/>
+
+                <!-- Beskrivning -->
+                <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                Text="Beskrivning:"
+                FontWeight="Bold"
+                Margin="0,0,15,10"/>
+
+                <TextBox
+                Grid.Row="1"
+                Grid.Column="1"
+                Height="70"
+                Text="{x:Bind ViewModel.Ticket.Description, Mode=TwoWay}"
+                TextWrapping="Wrap"
+                AcceptsReturn="True"
+                Margin="0,0,0,10"/>
+
+                <!-- Kund -->
+                <TextBlock
+                Grid.Row="2"
+                Grid.Column="0"
+                Text="Kund:"
+                FontWeight="Bold"
+                Margin="0,0,15,10"/>
+
+                <TextBlock
+                Grid.Row="2"
+                Grid.Column="1"
+                Text="{x:Bind ViewModel.Customer.Name,
+                    Mode=OneWay,
+                    FallbackValue='Okänd kund',
+                    TargetNullValue='Okänd kund'}"
+                Margin="0,0,0,10"/>
+
+                <!-- E-post -->
+                <TextBlock
+                Grid.Row="3"
+                Grid.Column="0"
+                Text="E-post:"
+                FontWeight="Bold"
+                Margin="0,0,15,10"/>
+
+                <TextBlock
+                Grid.Row="3"
+                Grid.Column="1"
+                Text="{x:Bind ViewModel.Customer.Email,
+                    Mode=OneWay,
+                    FallbackValue='Ingen e-postadress',
+                    TargetNullValue='Ingen e-postadress'}"
+                Margin="0,0,0,10"/>
+
+                <!-- Prioritet -->
+                <TextBlock
+                Grid.Row="4"
+                Grid.Column="0"
+                Text="Prioritet:"
+                FontWeight="Bold"
+                Margin="0,0,15,10"/>
+
+                <ComboBox
+                Grid.Row="4"
+                Grid.Column="1"
+                Width="200"
+                HorizontalAlignment="Left"
+                Margin="0,0,0,10"
+                ItemsSource="{x:Bind ViewModel.TicketPriorities}"
+                SelectedItem="{x:Bind ViewModel.SelectedPriority, Mode=TwoWay}"/>
+
+                <!-- Status -->
+                <TextBlock
+                Grid.Row="5"
+                Grid.Column="0"
+                Text="Status:"
+                FontWeight="Bold"
+                Margin="0,0,15,10"/>
+
+                <ComboBox
+                Grid.Row="5"
+                Grid.Column="1"
+                Width="200"
+                HorizontalAlignment="Left"
+                Margin="0,0,0,10"
+                ItemsSource="{x:Bind ViewModel.TicketStatuses}"
+                SelectedItem="{x:Bind ViewModel.SelectedStatus, Mode=TwoWay}"/>
+
+                <!-- Tekniker -->
+                <TextBlock
+                Grid.Row="6"
+                Grid.Column="0"
+                Text="Tekniker:"
+                FontWeight="Bold"
+                Margin="0,0,15,0"/>
+
+                <ComboBox
+                Grid.Row="6"
+                Grid.Column="1"
+                Width="200"
+                HorizontalAlignment="Left"
+                ItemsSource="{x:Bind ViewModel.Technicians}"
+                SelectedItem="{x:Bind ViewModel.SelectedTechnician, Mode=TwoWay}"/>
+
+                <!-- Felmeddelande -->
+                <TextBlock
+                Grid.Row="7"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+                Foreground="Red"
+                TextWrapping="Wrap"
+                Margin="0,5,0,0"/>
+
+            </Grid>
+
+            <!-- KOMMENTARER -->
+            <Border
+            Grid.Row="2"
+            MinHeight="240"
+            BorderBrush="Gray"
+            BorderThickness="1"
+            CornerRadius="5"
+            Padding="15"
+            Margin="0,0,0,20">
+
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <!-- Kommentar-rubrik -->
+                        <RowDefinition Height="Auto"/>
+
+                        <!-- Listan tar bara den plats den behöver -->
+                        <RowDefinition Height="Auto"/>
+
+                        <!-- Textruta för ny kommentar -->
+                        <RowDefinition Height="Auto"/>
+
+                        <!-- Knapp på en egen rad -->
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Kommentar-rubrik -->
+                    <TextBlock
+                    Grid.Row="0"
+                    Text="Kommentarer"
+                    Style="{StaticResource SectionTitleStyle}"
+                    Margin="0,0,0,10"/>
+
+                    <!-- Lista med kommentarer -->
+                    <ListBox
+                    Grid.Row="1"
+                    MinHeight="0"
+                    MaxHeight="140"
+                    Margin="0,0,0,10"
+                    ItemsSource="{x:Bind ViewModel.Ticket.Comments, Mode=OneWay}">
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="models:Comment">
+                                <StackPanel Margin="0,0,0,10">
+
+                                    <!-- Kommentartext -->
+                                    <TextBlock
+                                    Text="{x:Bind CommentContent}"
+                                    TextWrapping="Wrap"/>
+
+                                    <!-- Datum och tid -->
+                                    <TextBlock
+                                    Text="{x:Bind CreatedAtLocal}"
+                                    FontSize="12"
+                                    Opacity="0.7"/>
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+
+                    </ListBox>
+
+                    <!-- Textruta där användaren skriver -->
+                    <TextBox
+                    Grid.Row="2"
+                    Height="70"
+                    Text="{x:Bind ViewModel.CommentText, Mode=TwoWay}"
+                    PlaceholderText="Skriv din kommentar här..."
+                    TextWrapping="Wrap"
+                    AcceptsReturn="True"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    Margin="0,0,0,10"/>
+
+                    <!-- Knappen ligger under textrutan -->
+                    <Button
+                    Grid.Row="3"
+                    Content="Lägg till kommentar"
+                    Style="{StaticResource CommentButtonStyle}"
+                    HorizontalAlignment="Right"
+                    Click="AddCommentButton_Click"/>
+
+                </Grid>
+
+            </Border>
+
+            <!-- KNAPPAR -->
+            <StackPanel
+            Grid.Row="3"
+            Orientation="Horizontal"
+            HorizontalAlignment="Right">
+
+                <Button
+                Content="Spara"
+                Style="{StaticResource PrimaryButtonStyle}"
+                Margin="0,0,10,0"
+                Click="SaveButton_Click"/>
+                <Button
+                Content="Tillbaka"
+                Style="{StaticResource SecondaryButtonStyle}"
+                Command="{x:Bind ViewModel.GoBackCommand}" />
+
+            </StackPanel>
+
+        </Grid>
+    </ScrollViewer>
+</Page>

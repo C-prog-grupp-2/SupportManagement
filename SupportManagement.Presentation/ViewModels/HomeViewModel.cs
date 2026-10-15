@@ -24,4 +24,10 @@ public partial class HomeViewModel : ObservableObject
     {
         _navigationService.Navigate(AppPage.TicketOverview);
     }
+
+    [RelayCommand]
+    private void GoBack()
+    {
+        _navigationService.Navigate(AppPage.TicketOverview);
+    }
 }
