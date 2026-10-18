@@ -36,6 +36,10 @@ public partial class ManageTicketViewModel(
     [ObservableProperty]
     public partial string ErrorMessage { get; set; } = string.Empty;
 
+    [ObservableProperty]
+    public partial string SuccessMessage { get; set; } = string.Empty;
+
+
     public TicketPriority[] TicketPriorities { get; } =
         Enum.GetValues<TicketPriority>();
 
@@ -52,6 +56,7 @@ public partial class ManageTicketViewModel(
     public async Task LoadTicketAsync(Guid ticketId)
     {
         ErrorMessage = string.Empty;
+        SuccessMessage = string.Empty;
 
         // Rensa tidigare data innan ett nytt ärende laddas.
         Ticket = null;
@@ -100,6 +105,7 @@ public partial class ManageTicketViewModel(
     public async Task SaveAsync()
     {
         ErrorMessage = string.Empty;
+        SuccessMessage = string.Empty;
 
         if (Ticket is null)
         {
@@ -132,6 +138,10 @@ public partial class ManageTicketViewModel(
 
             // Hämta de uppdaterade uppgifterna.
             await LoadTicketAsync(ticketId);
+            if (string.IsNullOrEmpty(ErrorMessage))
+            {
+                SuccessMessage = "Ändringarna har sparats.";
+            }
         }
         catch (ArgumentException ex)
         {
